@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -16,6 +17,7 @@ public class LoginFragment extends Fragment {
 
     EditText email, password;
     ImageButton loginBtn;
+    Button goToRegisterBtn;
     ProgressBar progress;
     SharedPreferences pref;
 
@@ -32,6 +34,7 @@ public class LoginFragment extends Fragment {
         email = (EditText) view.findViewById(R.id.main_email);
         password = (EditText) view.findViewById(R.id.main_pw);
         loginBtn = (ImageButton) view.findViewById(R.id.btn_main_login);
+        goToRegisterBtn = (Button) view.findViewById(R.id.btn_goToRegister);
         progress = (ProgressBar) view.findViewById(R.id.progress);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +43,14 @@ public class LoginFragment extends Fragment {
                 doLogin();
             }
         });
+
+        goToRegisterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToRegister();
+            }
+        });
+
     }
 
     public void doLogin(){
@@ -56,14 +67,20 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    public void onClickGotoRegister() {
+        goToRegister();
+    }
+
     private void loginProcess(String eamil, String pasword) {
 
     }
 
-    private void goToLogin(){
-        Fragment login = new LoginFragment();
+    private void goToRegister(){
+        Fragment reg = new RegisterFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_frame,login);
+        ft.replace(R.id.fragment_frame,reg);
         ft.commit();
     }
+
+
 }

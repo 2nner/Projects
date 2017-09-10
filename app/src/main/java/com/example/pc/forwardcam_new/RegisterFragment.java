@@ -47,23 +47,28 @@ public class RegisterFragment extends Fragment {
         email.setText(null);
         password.setText(null);
         confirm_password.setText(null);
-    }
 
-    public void onClicked_btn_Register(View v) {
 
-        String str_lastname = lastname.getText().toString();
-        String str_firstname = firstname.getText().toString();
-        String str_email = email.getText().toString();
-        String str_password = password.getText().toString();
 
-        if(validate() == true) {
-            progress.setVisibility(View.VISIBLE);
-            registerProcess(str_lastname,str_firstname,str_email,str_password);
-            goToLogin();
-        } else {
-            Toast.makeText(getActivity(), "계정 생성 실패!", Toast.LENGTH_LONG).show();
-            return;
-        }
+        reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(validate() == true) {
+                    String str_lastname = lastname.getText().toString();
+                    String str_firstname = firstname.getText().toString();
+                    String str_email = email.getText().toString();
+                    String str_password = password.getText().toString();
+
+                    progress.setVisibility(View.VISIBLE);
+                    registerProcess(str_lastname,str_firstname,str_email,str_password);
+                    goToLogin();
+                } else {
+                    Toast.makeText(getActivity(), "계정 생성 실패!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        });
+
 
     }
 
