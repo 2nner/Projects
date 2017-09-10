@@ -5,7 +5,6 @@ import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,11 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(pref.getBoolean(Constants.IS_LOGGED_IN,false)) {
             fragment = new FirstFragment();
-            Log.e("asdf", "First");
         } else {
-
             fragment = new LoginFragment();
-            Log.e("asdf", "LOG");
         }
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();

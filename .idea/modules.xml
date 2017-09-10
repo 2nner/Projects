@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ForwardCam_new.iml" filepath="$PROJECT_DIR$/ForwardCam_new.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/frontcam.iml" filepath="$PROJECT_DIR$/frontcam.iml" />
     </modules>
   </component>
 </project>
