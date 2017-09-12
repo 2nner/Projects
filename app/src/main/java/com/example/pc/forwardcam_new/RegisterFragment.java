@@ -2,6 +2,7 @@ package com.example.pc.forwardcam_new;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ public class RegisterFragment extends Fragment {
     EditText lastname, firstname, email, password, confirm_password;
     ImageButton reg;
     ProgressBar progress;
+    private Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +65,7 @@ public class RegisterFragment extends Fragment {
                     registerProcess(str_lastname,str_firstname,str_email,str_password);
                     goToLogin();
                 } else {
-                    Toast.makeText(getActivity(), "계정 생성 실패!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "계정 생성 실패!", Toast.LENGTH_LONG).show();
                     return;
                 }
             }
@@ -98,7 +100,7 @@ public class RegisterFragment extends Fragment {
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
 
                 ServerResponse resp = response.body();
-                Toast.makeText(getActivity(), resp.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, resp.getMessage(), Toast.LENGTH_LONG).show();
                 progress.setVisibility(View.INVISIBLE);
             }
 
@@ -107,7 +109,7 @@ public class RegisterFragment extends Fragment {
 
                 progress.setVisibility(View.INVISIBLE);
                 Log.d(Constants.TAG,"failed");
-                Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
             }
         });

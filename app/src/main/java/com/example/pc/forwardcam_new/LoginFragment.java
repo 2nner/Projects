@@ -2,9 +2,9 @@ package com.example.pc.forwardcam_new;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,17 +28,20 @@ public class LoginFragment extends Fragment {
     Button goToRegisterBtn;
     ProgressBar progress;
     SharedPreferences pref;
+    private Context context;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login,container,false);
+        context = getActivity();
         initViews(view);
         return view;
     }
 
     private void initViews(View view) {
-        pref = getActivity().getPreferences(0);
 
+        pref = getActivity().getPreferences(0);
         email = (EditText) view.findViewById(R.id.main_email);
         password = (EditText) view.findViewById(R.id.main_pw);
         loginBtn = (ImageButton) view.findViewById(R.id.btn_main_login);
@@ -99,7 +103,7 @@ public class LoginFragment extends Fragment {
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
 
                 ServerResponse resp = response.body();
-                Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
+                Toast.makeText(context, resp.getMessage(), Toast.LENGTH_LONG).show();
 
                 if(resp.getResult().equals(Constants.SUCCESS)){
                     SharedPreferences.Editor editor = pref.edit();
@@ -118,7 +122,7 @@ public class LoginFragment extends Fragment {
 
                 progress.setVisibility(View.INVISIBLE);
                 Log.d(Constants.TAG,"failed");
-                Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
+                Toast.makeText(context, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
             }
         });
