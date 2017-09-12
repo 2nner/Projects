@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,18 +69,19 @@ public class LoginFragment extends Fragment {
         String str_email = email.getText().toString();
         String str_password = password.getText().toString();
 
-        if(str_email.isEmpty()) {
-            email.setError("이메일을 입력해 주세요!");
-        } else if(str_password.isEmpty()) {
-            password.setError("비밀번호를 입력해 주세요!");
-        } else {
-            progress.setVisibility(View.VISIBLE);
-            loginProcess(str_email,str_password);
+        if (isInternetAvailable()) {
+            if(str_email.isEmpty()) {
+                email.setError("이메일을 입력해 주세요!");
+            } else if(str_password.isEmpty()) {
+                password.setError("비밀번호를 입력해 주세요!");
+            } else {
+                progress.setVisibility(View.VISIBLE);
+                loginProcess(str_email,str_password);
+            }
         }
-    }
-
-    public void onClickGotoRegister() {
-        goToRegister();
+        else {
+            Toast.makeText(context,"인터넷 연결을 확인해 주세요!",Toast.LENGTH_LONG).show();
+        }
     }
 
     private void loginProcess(String email, String password) {
@@ -142,4 +144,17 @@ public class LoginFragment extends Fragment {
         ft.commit();
     }
 
+    private Boolean isInternetAvailable() {
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        boolean isMobileAvailable = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isAvailable();
+        boolean isMobileConnected = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected();
+        boolean isWifiAvailable = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isAvailable();
+        boolean isWifiConnected = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected();
+
+        if((isMobileAvailable && isMobileConnected) || (isWifiAvailable && isWifiConnected))
+            return true;
+        else
+            return false;
+
+    }
 }
