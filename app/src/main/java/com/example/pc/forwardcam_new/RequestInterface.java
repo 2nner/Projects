@@ -7,7 +7,7 @@ import retrofit2.http.POST;
 
 public interface RequestInterface {
 
-    @POST("indexx.php/")
+    @POST("frontcam")
     Call<ServerResponse> operation(@Body ServerRequest request);
 
 }
