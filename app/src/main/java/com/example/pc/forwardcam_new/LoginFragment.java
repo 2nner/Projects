@@ -134,6 +134,7 @@ public class LoginFragment extends Fragment {
         Fragment fragment = new RegisterFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_frame,fragment);
+        ft.addToBackStack(null);
         ft.commit();
     }
 
@@ -141,6 +142,7 @@ public class LoginFragment extends Fragment {
         Fragment fragment = new FirstFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_frame,fragment);
+        ft.addToBackStack(null);
         ft.commit();
     }
 

@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -50,8 +52,6 @@ public class RegisterFragment extends Fragment {
         password.setText(null);
         confirm_password.setText(null);
 
-
-
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,17 +72,25 @@ public class RegisterFragment extends Fragment {
         });
 
 
+
     }
 
     public void registerProcess(String lastname, String firstname, String email, String password) {
 
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        client.addInterceptor(loggingInterceptor);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(client.build())
                 .build();
 
         RequestInterface requestInterface = retrofit.create(RequestInterface.class);
         ServerRequest request = new ServerRequest();
+
 
         User user = new User();
 
@@ -138,26 +146,20 @@ public class RegisterFragment extends Fragment {
             firstname.setError(null);
         }
 
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches()) {
-            email.setError("메일의 형식이 다릅니다!");
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches() || str_email.isEmpty()) {
+            email.setError("메일 형식에 맞춰 입력해 주세요!");
             valid = false;
         } else {
             email.setError(null);
         }
 
-        if (str_email.isEmpty()) {
-            email.setError("메일을 입력해주세요!");
-            valid = false;
-        } else {
-            email.setError(null);
-        }
-
-        if (str_password.isEmpty()) {
-            password.setError("비밀번호를 입력해주세요!");
+        if (str_password.isEmpty() || str_password.length() < 6) {
+            password.setError("비밀번호는 6자리 이상 입력해주세요!");
             valid = false;
         } else {
             password.setError(null);
         }
+
 
         if (str_confirmPassword.isEmpty() || !(str_confirmPassword.equals(str_password))) {
             confirm_password.setError("비밀번호가 다릅니다!");
@@ -173,6 +175,7 @@ public class RegisterFragment extends Fragment {
         Fragment login = new LoginFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_frame,login);
+        ft.addToBackStack(null);
         ft.commit();
     }
 }
