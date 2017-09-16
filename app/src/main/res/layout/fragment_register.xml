@@ -9,7 +9,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
 
         <LinearLayout
@@ -30,16 +31,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="105dp"
-                android:layout_marginStart="20dp"
-                android:paddingBottom="36dp">
+                android:gravity="center"
+                android:paddingBottom="36dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginStart="36dp"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/iv_user_icon"
+                    android:paddingRight="3dp"
+                    />
 
                 <EditText
                     android:id="@+id/et_lastname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Last name"
+                    android:hint="성"
                     android:inputType="textPersonName"
                     android:maxLength="10"
                     android:textColor="#ffffff"
@@ -50,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="First name"
+                    android:hint="이름"
                     android:inputType="textPersonName"
                     android:maxLength="5"
                     android:textColor="#ffffff"
@@ -61,77 +71,81 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="105dp"
-                android:layout_marginStart="20dp"
-                android:paddingBottom="36dp">
+                android:orientation="horizontal"
+                android:paddingBottom="36dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginStart="36dp"
+                >
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/iv_email_icon"
+                    android:paddingRight="5dp"/>
 
                 <EditText
                     android:id="@+id/et_email"
-                    android:layout_width="300dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="E - mail"
+                    android:hint="이메일"
                     android:inputType="textEmailAddress"
                     android:maxLength="30"
                     android:textColor="#ffffff"
                     android:textColorHint="#ffffff"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="190dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginStart="36dp"
                 android:paddingBottom="36dp">
 
-                <EditText
-                    android:id="@+id/et_con_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Confirm code"
-                    android:inputType="text"
-                    android:maxLength="5"
-                    android:textColor="#ffffff"
-                    android:textColorHint="#ffffff"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="105dp"
-                android:layout_marginStart="20dp"
-                android:paddingBottom="36dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/iv_pw_icon"
+                    android:paddingRight="3dp"
+                    />
 
                 <EditText
                     android:id="@+id/et_pw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Password"
+                    android:hint="비밀번호"
                     android:inputType="textPassword"
                     android:maxLength="30"
                     android:textColor="#ffffff"
-                    android:textColorHint="#ffffff"
-                    />
+                    android:textColorHint="#ffffff" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="105dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginStart="36dp"
                 android:paddingBottom="40dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/iv_check_icon"
+                    android:paddingRight="5dp"
+                    />
 
                 <EditText
                     android:id="@+id/et_con_pw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Confirm Password"
+                    android:hint="비밀번호 확인"
                     android:inputType="textPassword"
                     android:maxLength="30"
                     android:textColor="#ffffff"
@@ -141,12 +155,12 @@
 
             <ImageButton
                 android:id="@+id/btn_register_register"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:layout_marginStart="320dp"
+                android:layout_gravity="right"
+                android:layout_marginEnd="20dp"
                 android:background="#00ff0000"
-                android:src="@drawable/btn_register_register" />
+                android:src="@drawable/btn_main_login" />
 
             <ProgressBar
                 style="@style/Base.Widget.AppCompat.ProgressBar"

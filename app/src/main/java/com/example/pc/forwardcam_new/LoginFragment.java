@@ -3,6 +3,7 @@ package com.example.pc.forwardcam_new;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -26,7 +27,8 @@ public class LoginFragment extends Fragment {
 
     EditText email, password;
     ImageButton loginBtn;
-    Button goToRegisterBtn;
+    ImageButton goToRegisterBtn;
+    Button btn_test; // 태현이가 추가한거 (임시)버튼, 너가 나중에 한 줄위에 있는 로그인버튼으로 뷰페이저 연결하셈,난 DB가 없어서 임시방편으로 만들어놓은거
     ProgressBar progress;
     SharedPreferences pref;
     private Context context;
@@ -46,13 +48,22 @@ public class LoginFragment extends Fragment {
         email = (EditText) view.findViewById(R.id.main_email);
         password = (EditText) view.findViewById(R.id.main_pw);
         loginBtn = (ImageButton) view.findViewById(R.id.btn_main_login);
-        goToRegisterBtn = (Button) view.findViewById(R.id.btn_goToRegister);
+        btn_test = (Button) view.findViewById(R.id.btn_test);      // 태현이가 추가한거 (임시로)
+        goToRegisterBtn = (ImageButton) view.findViewById(R.id.btn_goToRegister);
         progress = (ProgressBar) view.findViewById(R.id.progress);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 doLogin();
+            }
+        });
+
+        btn_test.setOnClickListener(new View.OnClickListener() {  // 태현이가 추가한거 (임시로)
+            @Override
+            public void onClick(View v) {                      // 태현이가 추가한거 (임시로)
+                Intent intent = new Intent(LoginFragment.this.getActivity(), SlideActivity.class);
+                startActivity(intent);
             }
         });
 

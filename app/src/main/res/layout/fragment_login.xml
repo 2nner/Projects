@@ -1,98 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background">
 
-
-    <ImageView
-        android:id="@+id/iv_circle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/circle"
-        android:layout_alignTop="@+id/iv_diagonal_r"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
-
-    <ImageView
-        android:id="@+id/iv_diagonal_l"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/diagonal_l"
-        android:layout_marginBottom="46dp"
-        android:layout_alignBottom="@+id/iv_diagonal_r"
-        android:layout_alignParentEnd="true" />
-
-    <ImageView
-        android:id="@+id/iv_diagonal_r"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/diagonal_l"
-        android:layout_marginBottom="250dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
-
-
-        <EditText
-        android:id="@+id/main_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="12"
-        android:textColorHint="#ffffff"
-        android:textColor="#ffffff"
-        android:hint="E-mail"
-        android:maxLength="50"
-        android:inputType="text"
-        android:visibility="visible"
-        android:layout_below="@+id/iv_diagonal_l"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp" />
-
-    <EditText
-        android:id="@+id/main_pw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
-        android:ems="12"
-        android:textColorHint="#ffffff"
-        android:textColor="#ffffff"
-        android:maxLength="30"
-        android:inputType="textPassword"
-        android:hint="Password"
-        android:visibility="visible"
-        android:layout_below="@+id/iv_diagonal_l"
-        android:layout_alignStart="@+id/main_email" />
-
-    <ImageButton
-        android:id="@+id/btn_main_login"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:background="#00ff0000"
-        android:src="@drawable/btn_main_login"
-        android:layout_alignTop="@+id/main_pw"
-        android:layout_alignEnd="@+id/main_pw" />
-
-    <ProgressBar
-        style="@style/Base.Widget.AppCompat.ProgressBar"
-        android:id="@+id/progress"
-        android:visibility="invisible"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:layout_above="@+id/main_email"
-        android:layout_alignParentStart="true" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_goToRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/main_pw"
-        android:layout_below="@+id/main_pw"
-        android:layout_marginTop="24dp"
-        android:text="Register" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-</RelativeLayout>
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="match_parent"
+                android:layout_height="432dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/logo"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginEnd="60dp"
+                android:layout_marginStart="60dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/iv_email_icon"
+                    android:paddingRight="5dp"
+                   />
+
+                <EditText
+                    android:id="@+id/main_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="12"
+                    android:hint="이메일"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:visibility="visible"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btn_goToRegister"
+                android:layout_width="89dp"
+                android:layout_height="25dp"
+                android:scaleType="fitStart"
+                android:src="@drawable/btn_main_register"
+                android:background="@android:color/transparent"
+                android:layout_gravity="right"
+                android:layout_marginRight="65dp"
+                android:layout_alignStart="@+id/main_pw"
+                android:layout_below="@+id/main_pw"
+                android:text="Register" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginEnd="60dp"
+                android:layout_marginStart="60dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/iv_pw_icon"
+                    android:paddingRight="5dp"
+                    />
+
+                <EditText
+                    android:id="@+id/main_pw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/main_email"
+                    android:ems="12"
+                    android:hint="비밀번호"
+                    android:inputType="textPassword"
+                    android:maxLength="30"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:visibility="visible"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/Base.Widget.AppCompat.ProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/main_email"
+                android:layout_alignParentStart="true"
+                android:indeterminate="true"
+                android:visibility="invisible" />
+
+
+            <ImageButton
+                android:id="@+id/btn_main_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginEnd="20dp"
+                android:background="#00ff0000"
+                android:src="@drawable/btn_main_login" />
+
+            <Button
+                android:id="@+id/btn_test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="(임시)홈 화면갈려면 누르셈(임시)" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

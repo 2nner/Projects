@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         pref = getPreferences(0);
         initFragment();
+
+
     }
 
     private void initFragment() {
@@ -31,4 +33,6 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.fragment_frame,fragment);
         ft.commit();
     }
+
+
 }
