@@ -10,7 +10,9 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/vp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
     </android.support.v4.view.ViewPager>
 
     <com.rd.PageIndicatorView
@@ -28,8 +30,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
+        android:layout_marginBottom="28dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp">
+        android:layout_alignParentStart="true">
 
         <ImageButton
             android:id="@+id/btn_home_home"
@@ -37,23 +40,15 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:src="@drawable/btn_home_home"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="65dp" />
 
-        <ImageButton
-            android:id="@+id/btn_home_health"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/btn_home_health"
-            android:background="@android:color/transparent"
-            android:layout_marginRight="20dp"
-            />
         <ImageButton
             android:id="@+id/btn_home_bluetooth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/btn_home_bluetooth"
             android:background="@android:color/transparent"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="65dp"
             />
         <ImageButton
             android:id="@+id/btn_home_user"

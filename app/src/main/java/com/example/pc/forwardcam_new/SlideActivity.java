@@ -12,7 +12,6 @@ import com.rd.PageIndicatorView;
 public class SlideActivity extends AppCompatActivity {
     ViewPager vp; // 뷰페이지 변수 선언
     ImageButton btn_home_home;
-    ImageButton btn_home_health;
     ImageButton btn_home_bluetooth;
     ImageButton btn_home_user;
 
@@ -24,7 +23,6 @@ public class SlideActivity extends AppCompatActivity {
         // 아이디로 뷰페이지와 각 버튼을 컨트롤 할 수 있게 함
         vp=(ViewPager)findViewById(R.id.vp);
         btn_home_home = (ImageButton)findViewById(R.id.btn_home_home);
-        btn_home_health = (ImageButton)findViewById(R.id.btn_home_health);
         btn_home_bluetooth = (ImageButton)findViewById(R.id.btn_home_bluetooth);
         btn_home_user = (ImageButton)findViewById(R.id.btn_home_user);
 
@@ -34,14 +32,12 @@ public class SlideActivity extends AppCompatActivity {
         btn_home_home.setOnClickListener(movePageListener);
         btn_home_home.setTag(0);
 
-        btn_home_health.setOnClickListener(movePageListener);
-        btn_home_health.setTag(1);
 
         btn_home_bluetooth.setOnClickListener(movePageListener);
-        btn_home_bluetooth.setTag(2);
+        btn_home_bluetooth.setTag(1);
 
         btn_home_user.setOnClickListener(movePageListener);
-        btn_home_user.setTag(3);
+        btn_home_user.setTag(2);
 
         PageIndicatorView pageIndicatorView = (PageIndicatorView) findViewById(R.id.pageIndicatorView);
         pageIndicatorView.setViewPager(vp);
@@ -72,10 +68,8 @@ public class SlideActivity extends AppCompatActivity {
                 case 0:
                     return new HomeFragment();  // 포지션에 따라 생성해놓은 클래스를 부름
                 case 1:
-                    return new HealthFragment(); // ""
+                    return new BluetoothFragment();// ""
                 case 2:
-                    return new BluetoothFragment();  // ""
-                case 3:
                     return new UserFragment();  // ""
                 default:
                     return null;
@@ -84,7 +78,7 @@ public class SlideActivity extends AppCompatActivity {
         @Override
         public int getCount() // ViewPager 안에 들어가는 Page 의 갯수
         {
-            return 4;
+            return 3;
         }
     }
 }
