@@ -1,6 +1,7 @@
 package com.example.pc.forwardcam_new;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -129,7 +130,10 @@ public class LoginFragment extends android.support.v4.app.Fragment {
                     editor.putString(Constants.LASTNAME,resp.getUser().getLastname());
                     editor.putString(Constants.FIRTSNAME,resp.getUser().getFirstname());
                     editor.apply();
-                    goToHome();
+
+                    getActivity().finish();
+                    Intent intent = new Intent(context, SlideActivity.class);
+                    startActivity(intent);
                 }
                 progress.setVisibility(View.INVISIBLE);
             }
@@ -147,14 +151,6 @@ public class LoginFragment extends android.support.v4.app.Fragment {
 
     private void goToRegister() {
         android.support.v4.app.Fragment fragment = new RegisterFragment();
-        android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_frame,fragment);
-        ft.addToBackStack(null);
-        ft.commit();
-    }
-
-    private void goToHome() {
-        android.support.v4.app.Fragment fragment = new HomeFragment();
         android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_frame,fragment);
         ft.addToBackStack(null);

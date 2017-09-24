@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         totalSensoredValue = (TextView) view.findViewById(R.id.tv_totalSensoredValue);
         totalAvoidedValue = (TextView) view.findViewById(R.id.tv_totalAvoidedValue);
 
-        setTodayTotalValue(Constants.EMAIL);
+        setTodayTotalValue(pref.getString(Constants.EMAIL,""));
     }
 
     private void setTodayTotalValue (String email) {
