@@ -6,19 +6,22 @@ package com.example.pc.forwardcam_new;
 
 public class ServerResponse {
 
-        private String result;
-        private String message;
-        private User user;
+    private String result;
+    private String message;
+    private String value;
+    private User user;
 
-        public String getResult() {
-            return result;
-        }
+    public String getResult() {
+        return result;
+    }
 
-        public String getMessage() {
-            return message;
-        }
+    public String getMessage() {
+        return message;
+    }
 
-        public User getUser() {
-            return user;
-        }
+    public String getValue() { return value; }
+
+    public User getUser() {
+        return user;
+    }
 }

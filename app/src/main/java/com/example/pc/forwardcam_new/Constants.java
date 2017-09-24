@@ -6,6 +6,9 @@ public class Constants {
     public static final String BASE_URL = "http://1.230.63.43/";
     public static final String REGISTER_OPERATION = "register";
     public static final String LOGIN_OPERATION = "login";
+    public static final String SENSOR_OPERATION = "sensor";
+    public static final String COLLISION_OPERATION = "collision";
+    public static final String TODAY_TOTAL_OPERATION = "todayTotal";
     // public static final String CHANGE_PASSWORD_OPERATION = "chgPass";
 
     public static final String SUCCESS = "success";

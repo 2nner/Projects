@@ -2,6 +2,7 @@ package com.example.pc.forwardcam_new;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,9 @@ import android.widget.LinearLayout;
 public class BluetoothFragment extends Fragment{
 
     Button btn_goTobluetooth;
+    private Context context;
+    SharedPreferences pref;
+
     public  BluetoothFragment(){}
 
 

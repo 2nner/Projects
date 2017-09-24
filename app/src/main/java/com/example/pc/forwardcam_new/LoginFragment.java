@@ -3,7 +3,6 @@ package com.example.pc.forwardcam_new;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -11,12 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -96,9 +96,15 @@ public class LoginFragment extends Fragment {
     }
 
     private void loginProcess(String email, String password) {
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        client.addInterceptor(loggingInterceptor);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(client.build())
                 .build();
 
         RequestInterface requestInterface = retrofit.create(RequestInterface.class);
@@ -125,7 +131,7 @@ public class LoginFragment extends Fragment {
                     editor.putString(Constants.LASTNAME,resp.getUser().getLastname());
                     editor.putString(Constants.FIRTSNAME,resp.getUser().getFirstname());
                     editor.apply();
-                    goToFirst();
+                    goToRegister();
                 }
                 progress.setVisibility(View.INVISIBLE);
             }
@@ -143,14 +149,6 @@ public class LoginFragment extends Fragment {
 
     private void goToRegister() {
         Fragment fragment = new RegisterFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_frame,fragment);
-        ft.addToBackStack(null);
-        ft.commit();
-    }
-
-    private void goToFirst() {
-        Fragment fragment = new FirstFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_frame,fragment);
         ft.addToBackStack(null);
