@@ -3,7 +3,7 @@ package com.example.pc.forwardcam_new;
 
 public class Constants {
 
-    public static final String BASE_URL = "http://1.230.63.43/";
+    public static final String BASE_URL = "http://frontcam.tk/";
     public static final String REGISTER_OPERATION = "register";
     public static final String LOGIN_OPERATION = "login";
     public static final String SENSOR_OPERATION = "sensor";

@@ -1,7 +1,5 @@
 package com.example.pc.forwardcam_new;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -23,7 +21,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends android.support.v4.app.Fragment {
 
     EditText email, password;
     ImageButton loginBtn;
@@ -131,7 +129,7 @@ public class LoginFragment extends Fragment {
                     editor.putString(Constants.LASTNAME,resp.getUser().getLastname());
                     editor.putString(Constants.FIRTSNAME,resp.getUser().getFirstname());
                     editor.apply();
-                    goToRegister();
+                    goToHome();
                 }
                 progress.setVisibility(View.INVISIBLE);
             }
@@ -148,8 +146,16 @@ public class LoginFragment extends Fragment {
     }
 
     private void goToRegister() {
-        Fragment fragment = new RegisterFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        android.support.v4.app.Fragment fragment = new RegisterFragment();
+        android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_frame,fragment);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    private void goToHome() {
+        android.support.v4.app.Fragment fragment = new HomeFragment();
+        android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_frame,fragment);
         ft.addToBackStack(null);
         ft.commit();

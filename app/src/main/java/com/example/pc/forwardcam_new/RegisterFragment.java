@@ -1,7 +1,5 @@
 package com.example.pc.forwardcam_new;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +19,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends android.support.v4.app.Fragment {
 
     EditText lastname, firstname, email, password, confirm_password;
     ImageButton reg;
@@ -172,9 +170,9 @@ public class RegisterFragment extends Fragment {
     }
 
     private void goToLogin(){
-        Fragment login = new LoginFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_frame,login);
+        android.support.v4.app.Fragment fragment = new LoginFragment();
+        android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_frame,fragment);
         ft.addToBackStack(null);
         ft.commit();
     }
