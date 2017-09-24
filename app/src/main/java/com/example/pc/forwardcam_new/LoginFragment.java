@@ -28,7 +28,7 @@ public class LoginFragment extends Fragment {
     EditText email, password;
     ImageButton loginBtn;
     ImageButton goToRegisterBtn;
-    Button btn_test; // 태현이가 추가한거 (임시)버튼, 너가 나중에 한 줄위에 있는 로그인버튼으로 뷰페이저 연결하셈,난 DB가 없어서 임시방편으로 만들어놓은거
+    //Button btn_test; // 태현이가 추가한거 (임시)버튼, 너가 나중에 한 줄위에 있는 로그인버튼으로 뷰페이저 연결하셈,난 DB가 없어서 임시방편으로 만들어놓은거
     ProgressBar progress;
     SharedPreferences pref;
     private Context context;
@@ -48,7 +48,7 @@ public class LoginFragment extends Fragment {
         email = (EditText) view.findViewById(R.id.main_email);
         password = (EditText) view.findViewById(R.id.main_pw);
         loginBtn = (ImageButton) view.findViewById(R.id.btn_main_login);
-        btn_test = (Button) view.findViewById(R.id.btn_test);      // 태현이가 추가한거 (임시로)
+        //btn_test = (Button) view.findViewById(R.id.btn_test);      // 태현이가 추가한거 (임시로)
         goToRegisterBtn = (ImageButton) view.findViewById(R.id.btn_goToRegister);
         progress = (ProgressBar) view.findViewById(R.id.progress);
 
@@ -59,13 +59,13 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        btn_test.setOnClickListener(new View.OnClickListener() {  // 태현이가 추가한거 (임시로)
+        /*btn_test.setOnClickListener(new View.OnClickListener() {  // 태현이가 추가한거 (임시로)
             @Override
             public void onClick(View v) {                      // 태현이가 추가한거 (임시로)
                 Intent intent = new Intent(LoginFragment.this.getActivity(), SlideActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         goToRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -119,11 +119,12 @@
                 android:background="#00ff0000"
                 android:src="@drawable/btn_main_login" />
 
+            <!--
             <Button
                 android:id="@+id/btn_test"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="(임시)홈 화면갈려면 누르셈(임시)" />
+                android:text="(임시)홈 화면갈려면 누르셈(임시)" /><-->
 
 
         </LinearLayout>
