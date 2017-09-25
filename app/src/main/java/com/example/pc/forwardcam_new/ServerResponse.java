@@ -8,7 +8,7 @@ public class ServerResponse {
 
     private String result;
     private String message;
-    private String value;
+    private int value;
     private User user;
 
     public String getResult() {
@@ -19,7 +19,7 @@ public class ServerResponse {
         return message;
     }
 
-    public String getValue() { return value; }
+    public int getValue() { return value; }
 
     public User getUser() {
         return user;

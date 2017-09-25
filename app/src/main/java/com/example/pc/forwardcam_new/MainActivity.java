@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,14 +21,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void initFragment() {
         android.support.v4.app.Fragment fragment;
+        boolean checkLogin;
 
-        if(pref.getBoolean(Constants.IS_LOGGED_IN,false)) {
+        if(Constants.IS_LOGGED_IN.equals(true))
+            checkLogin = false;
+        else
+            checkLogin = true;
+
+        if(checkLogin) {
+            fragment = new LoginFragment();
+        } else {
             finish();
             Intent intent = new Intent(this, SlideActivity.class);
             startActivity(intent);
+            Toast.makeText(getApplicationContext(),Constants.IS_LOGGED_IN,Toast.LENGTH_LONG).show();
             return;
-        } else {
-            fragment = new LoginFragment();
         }
 
         android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
