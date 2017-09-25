@@ -2,6 +2,7 @@ package com.example.pc.forwardcam_new;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -37,12 +38,16 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_home, container, false);
-        initViews(layout);
         context = getActivity();
+        initViews(layout);
+
+        Home_CircleGraph circleGraph = new Home_CircleGraph(context);
+        layout.addView(circleGraph);
         return layout;
     }
 
     private void initViews(View view) {
+        Canvas canvas = new Canvas();
         pref = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
 
         totalSensoredValue = (TextView) view.findViewById(R.id.tv_totalSensoredValue);
@@ -50,6 +55,7 @@ public class HomeFragment extends Fragment {
 
         setTodayTotalValue(pref.getString(Constants.EMAIL,""));
         setTodayAvoidedValue(pref.getString(Constants.EMAIL,""));
+
     }
 
     private void setTodayTotalValue (String email) {
@@ -117,7 +123,7 @@ public class HomeFragment extends Fragment {
         user.setEmail(email);
 
         ServerRequest request = new ServerRequest();
-        request.setOperation(Constants.TODAY_TOTAL_OPERATION);
+        request.setOperation(Constants.TODAY_AVOIDED_OPERATION);
         request.setUser(user);
         Call<ServerResponse> response = requestInterface.operation(request);
 

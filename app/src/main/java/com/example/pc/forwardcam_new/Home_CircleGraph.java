@@ -7,8 +7,10 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.View;
 
+
+
 /**
- * Created by khsbs on 2017-09-25.
+ * Created by LG-gram on 2017-09-26.
  */
 
 public class Home_CircleGraph extends View {
@@ -18,12 +20,13 @@ public class Home_CircleGraph extends View {
     }
 
 
-    protected void onDraw(Canvas canvas, String value) {
+    public void onDraw(Canvas canvas, int todayTotal, int todayAvoided) {
+
         final float ZERO = -90f; //drawAcr를 이용하면 오른쪽이 0도가 된다. 일반적으로 가장 위를 0으로 보기 때문에 - 90도를 해준다.
         final float DOTONE = 3.6f; //이 소스에서는 5점이 만점이기 때문에 360/5를 해서 1점당 72도를 준다.
-        float score = Float.parseFloat(value); //점수. 하드코딩으로 넣었지만 나중에 변경 예정
+        float value = (float) (todayAvoided / todayTotal)*100;//점수. 하드코딩으로 넣었지만 나중에 변경 예정
 
-        float degree = score * DOTONE;
+        float degree = value * DOTONE;
 
         Paint p = new Paint(); //페인트 객체 p 생성
         p.setAntiAlias(true); //윤곽에 안티알리아싱을 처리해서 부드럽게 할건지 설정
@@ -31,7 +34,7 @@ public class Home_CircleGraph extends View {
         p.setStrokeWidth(5); //윤곽선의 두께
         p.setAlpha(0x00); //배경 원의 투명도. 이 부분을 00으로 투명하게 처리하지 않으면 배경 원과 점수의 원이 다 보인다.
 
-        RectF rectF = new RectF(500, 1000, 500, 1000); //사각형 객체 rectF를 생성하며 점수 원의 크기를 사각형으로 보고 (좌, 상, 우, 하) 좌표 설정. 좌상이 기준이 된다.
+        RectF rectF = new RectF(360, 920, 1080, 1640); //사각형 객체 rectF를 생성하며 점수 원의 크기를 사각형으로 보고 (좌, 상, 우, 하) 좌표 설정. 좌상이 기준이 된다.
 
         if (degree < 25) {
             p.setColor(Color.RED);

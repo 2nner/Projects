@@ -9,6 +9,7 @@ public class Constants {
     public static final String SENSOR_OPERATION = "sensor";
     public static final String COLLISION_OPERATION = "collision";
     public static final String TODAY_TOTAL_OPERATION = "todayTotal";
+    public static final String TODAY_AVOIDED_OPERATION = "avoidedTotal";
     // public static final String CHANGE_PASSWORD_OPERATION = "chgPass";
 
     public static final String SUCCESS = "success";
