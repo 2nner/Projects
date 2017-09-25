@@ -127,10 +127,9 @@ public class LoginFragment extends android.support.v4.app.Fragment {
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putBoolean(Constants.IS_LOGGED_IN,true);
                     editor.putString(Constants.EMAIL,resp.getUser().getEmail());
-                    editor.putString(Constants.LASTNAME,resp.getUser().getLastname());
-                    editor.putString(Constants.FIRTSNAME,resp.getUser().getFirstname());
                     editor.apply();
 
+                    Toast.makeText(context, resp.getUser().getEmail(), Toast.LENGTH_LONG);
                     getActivity().finish();
                     Intent intent = new Intent(context, SlideActivity.class);
                     startActivity(intent);
