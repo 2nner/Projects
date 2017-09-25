@@ -43,7 +43,7 @@ public class LoginFragment extends android.support.v4.app.Fragment {
 
     private void initViews(View view) {
 
-        pref = getActivity().getPreferences(0);
+        pref = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
         email = (EditText) view.findViewById(R.id.main_email);
         password = (EditText) view.findViewById(R.id.main_pw);
         loginBtn = (ImageButton) view.findViewById(R.id.btn_main_login);
@@ -128,8 +128,9 @@ public class LoginFragment extends android.support.v4.app.Fragment {
                     editor.putBoolean(Constants.IS_LOGGED_IN,true);
                     editor.putString(Constants.EMAIL,resp.getUser().getEmail());
                     editor.apply();
+                    //Toast.makeText(context, "EMAIL : "+resp.getUser().getEmail(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, "EMAIL by pref : "+pref.getString(Constants.EMAIL,""), Toast.LENGTH_LONG).show();
 
-                    Toast.makeText(context, resp.getUser().getEmail(), Toast.LENGTH_LONG);
                     getActivity().finish();
                     Intent intent = new Intent(context, SlideActivity.class);
                     startActivity(intent);

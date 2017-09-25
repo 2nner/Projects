@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        pref = getPreferences(0);
+        pref = getSharedPreferences("pref", MODE_PRIVATE);
         initFragment();
         //
     }

@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void initViews(View view) {
-        pref = getActivity().getPreferences(0);
+        pref = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
 
         totalSensoredValue = (TextView) view.findViewById(R.id.tv_totalSensoredValue);
         totalAvoidedValue = (TextView) view.findViewById(R.id.tv_totalAvoidedValue);
@@ -56,6 +56,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void setTodayTotalValue (String email) {
+
+        Log.d(Constants.TAG,"Getting Value : "+email);
+
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
