@@ -78,7 +78,6 @@ public class LoginFragment extends android.support.v4.app.Fragment {
             } else {
                 progress.setVisibility(View.VISIBLE);
                 saveUserLastname(str_email);
-                saveUserFirstname(str_email);
                 loginProcess(str_email,str_password);
             }
         }
@@ -209,48 +208,4 @@ public class LoginFragment extends android.support.v4.app.Fragment {
         });
     }
 
-    private void saveUserFirstname(String email) {
-        OkHttpClient.Builder client = new OkHttpClient.Builder();
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        client.addInterceptor(loggingInterceptor);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client.build())
-                .build();
-
-        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
-
-        User user = new User();
-        user.setEmail(email);
-        ServerRequest request = new ServerRequest();
-        request.setOperation(Constants.GET_USERFIRST);
-        request.setUser(user);
-        Call<ServerResponse> response = requestInterface.operation(request);
-
-        response.enqueue(new Callback<ServerResponse>() {
-            @Override
-            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
-
-                ServerResponse resp = response.body();
-
-                if(resp.getResult().equals(Constants.SUCCESS)){
-                    SharedPreferences.Editor editor1 = pref.edit();
-                    editor1.putString(Constants.FIRSTNAME,resp.getMessage());
-                    editor1.apply();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t) {
-
-                Log.d(Constants.TAG,"failed");
-                Toast.makeText(context, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-
-            }
-        });
-    }
 }

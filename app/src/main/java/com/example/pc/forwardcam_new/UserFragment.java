@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -40,7 +48,7 @@ public class UserFragment extends Fragment {
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_user, container, false);
         context = getActivity();
         initViews(layout);
-
+        saveUserFirstname(pref.getString(Constants.EMAIL,""));
         return layout;
     }
 
@@ -113,7 +121,89 @@ public class UserFragment extends Fragment {
         Toast.makeText(context,"Logging out",Toast.LENGTH_LONG);
     }
 
-    public void changePassword() {
+    public void changePassword(String email, String old_password, String new_password) {
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        client.addInterceptor(loggingInterceptor);
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client.build())
+                .build();
+
+        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+
+        User user = new User();
+        user.setEmail(email);
+        ServerRequest request = new ServerRequest();
+        request.setOperation(Constants.CHANGE_PASSWORD_OPERATION);
+        request.setUser(user);
+        Call<ServerResponse> response = requestInterface.operation(request);
+
+        response.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+
+                ServerResponse resp = response.body();
+
+                if(resp.getResult().equals(Constants.SUCCESS)){}
+
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+
+                Log.d(Constants.TAG,"failed");
+                Toast.makeText(context, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    private void saveUserFirstname(String email) {
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        client.addInterceptor(loggingInterceptor);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client.build())
+                .build();
+
+        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+
+        User user = new User();
+        user.setEmail(email);
+        ServerRequest request = new ServerRequest();
+        request.setOperation(Constants.GET_USERFIRST);
+        request.setUser(user);
+        Call<ServerResponse> response = requestInterface.operation(request);
+
+        response.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+
+                ServerResponse resp = response.body();
+
+                if(resp.getResult().equals(Constants.SUCCESS)){
+                    SharedPreferences.Editor editor1 = pref.edit();
+                    editor1.putString(Constants.FIRSTNAME,resp.getMessage());
+                    editor1.apply();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+
+                Log.d(Constants.TAG,"failed");
+                Toast.makeText(context, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
     }
 }

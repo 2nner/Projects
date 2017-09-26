@@ -42,9 +42,9 @@ public class HomeFragment extends Fragment {
         context = getActivity();
 
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_home, container, false);
-
+        LinearLayout graphLayout = (LinearLayout) layout.findViewById(R.id.graphLayout);
         initViews(layout);
-        layout.addView(new CircleGraph(context));
+        graphLayout.addView(new CircleGraph(context));
         return layout;
     }
 
@@ -140,7 +140,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private class CircleGraph extends View {
+    public class CircleGraph extends View {
 
         Paint p = new Paint();
 
