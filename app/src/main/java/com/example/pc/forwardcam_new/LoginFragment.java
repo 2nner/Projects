@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -58,14 +57,6 @@ public class LoginFragment extends android.support.v4.app.Fragment {
                 doLogin();
             }
         });
-        /*
-        btn_test.setOnClickListener(new View.OnClickListener() {  // 태현이가 추가한거 (임시로)
-            @Override
-            public void onClick(View v) {                      // 태현이가 추가한거 (임시로)
-                Intent intent = new Intent(LoginFragment.this.getActivity(), SlideActivity.class);
-                startActivity(intent);
-            }
-        });*/
 
         goToRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +64,6 @@ public class LoginFragment extends android.support.v4.app.Fragment {
                 goToRegister();
             }
         });
-
     }
 
     public void doLogin(){
@@ -87,6 +77,8 @@ public class LoginFragment extends android.support.v4.app.Fragment {
                 password.setError("비밀번호를 입력해 주세요!");
             } else {
                 progress.setVisibility(View.VISIBLE);
+                saveUserLastname(str_email);
+                saveUserFirstname(str_email);
                 loginProcess(str_email,str_password);
             }
         }
@@ -126,11 +118,10 @@ public class LoginFragment extends android.support.v4.app.Fragment {
 
                 if(resp.getResult().equals(Constants.SUCCESS)){
                     SharedPreferences.Editor editor = pref.edit();
+
                     editor.putBoolean(Constants.IS_LOGGED_IN,true);
                     editor.putString(Constants.EMAIL,resp.getUser().getEmail());
                     editor.apply();
-                    //Toast.makeText(context, "EMAIL : "+resp.getUser().getEmail(), Toast.LENGTH_LONG).show();
-                    //Toast.makeText(context, "EMAIL by pref : "+pref.getString(Constants.EMAIL,""), Toast.LENGTH_LONG).show();
 
                     getActivity().finish();
                     Intent intent = new Intent(context, SlideActivity.class);
@@ -153,6 +144,7 @@ public class LoginFragment extends android.support.v4.app.Fragment {
     private void goToRegister() {
         android.support.v4.app.Fragment fragment = new RegisterFragment();
         android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.layout_leftin,R.anim.layout_leftout, R.anim.layout_leftin, R.anim.layout_leftout);
         ft.replace(R.id.fragment_frame,fragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -172,4 +164,93 @@ public class LoginFragment extends android.support.v4.app.Fragment {
 
     }
 
+    private void saveUserLastname(String email) {
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        client.addInterceptor(loggingInterceptor);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client.build())
+                .build();
+
+        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+
+        User user = new User();
+        user.setEmail(email);
+        ServerRequest request = new ServerRequest();
+        request.setOperation(Constants.GET_USERLAST);
+        request.setUser(user);
+        Call<ServerResponse> response = requestInterface.operation(request);
+
+        response.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+
+                ServerResponse resp = response.body();
+
+                if(resp.getResult().equals(Constants.SUCCESS)){
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString(Constants.LASTNAME,resp.getMessage());
+                    editor.apply();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+
+                Log.d(Constants.TAG,"failed");
+                Toast.makeText(context, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    private void saveUserFirstname(String email) {
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        client.addInterceptor(loggingInterceptor);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client.build())
+                .build();
+
+        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+
+        User user = new User();
+        user.setEmail(email);
+        ServerRequest request = new ServerRequest();
+        request.setOperation(Constants.GET_USERFIRST);
+        request.setUser(user);
+        Call<ServerResponse> response = requestInterface.operation(request);
+
+        response.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+
+                ServerResponse resp = response.body();
+
+                if(resp.getResult().equals(Constants.SUCCESS)){
+                    SharedPreferences.Editor editor1 = pref.edit();
+                    editor1.putString(Constants.FIRSTNAME,resp.getMessage());
+                    editor1.apply();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+
+                Log.d(Constants.TAG,"failed");
+                Toast.makeText(context, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
 }

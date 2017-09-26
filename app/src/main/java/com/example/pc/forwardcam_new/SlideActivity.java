@@ -42,6 +42,7 @@ public class SlideActivity extends AppCompatActivity {
 
         PageIndicatorView pageIndicatorView = (PageIndicatorView) findViewById(R.id.pageIndicatorView);
         pageIndicatorView.setViewPager(vp);
+
     }
 
 

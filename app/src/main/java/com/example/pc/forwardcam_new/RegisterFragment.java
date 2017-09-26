@@ -175,6 +175,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
     private void goToLogin(){
         android.support.v4.app.Fragment fragment = new LoginFragment();
         android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.layout_leftout,R.anim.layout_leftin, R.anim.layout_leftout, R.anim.layout_leftin);
         ft.replace(R.id.fragment_frame,fragment);
         ft.addToBackStack(null);
         ft.commit();

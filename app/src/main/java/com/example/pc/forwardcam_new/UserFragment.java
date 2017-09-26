@@ -1,6 +1,5 @@
 package com.example.pc.forwardcam_new;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,13 +11,12 @@ import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import static android.R.id.edit;
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -28,6 +26,7 @@ public class UserFragment extends Fragment {
     ImageButton logout;
     Context context;
     ImageButton change_pw; // 태현이가 추가한 버튼(비밀번호 변경)
+    TextView tv_fullname, tv_email;
 
     public  UserFragment(){}
 
@@ -41,6 +40,7 @@ public class UserFragment extends Fragment {
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_user, container, false);
         context = getActivity();
         initViews(layout);
+
         return layout;
     }
 
@@ -76,7 +76,8 @@ public class UserFragment extends Fragment {
 
         logout = (ImageButton) view.findViewById(R.id.logout);
         change_pw = (ImageButton) view.findViewById(R.id.btn_user_pw); // 태현이가 추가함 (용도: Alertdialog)
-
+        tv_fullname = (TextView) view.findViewById(R.id.tv_fullname);
+        tv_email = (TextView) view.findViewById(R.id.tv_email);
 
         change_pw.setOnClickListener(new View.OnClickListener() { // 태현이가 추가함 (용도 : Alertdialog)
             @Override
@@ -91,6 +92,9 @@ public class UserFragment extends Fragment {
                 doLogout();
             }
         });
+
+        tv_fullname.setText(pref.getString(Constants.LASTNAME,"")+" "+pref.getString(Constants.FIRSTNAME,""));
+        tv_email.setText(pref.getString(Constants.EMAIL,""));
     }
 
     public void doLogout() {
@@ -107,5 +111,9 @@ public class UserFragment extends Fragment {
         startActivity(intent);
 
         Toast.makeText(context,"Logging out",Toast.LENGTH_LONG);
+    }
+
+    public void changePassword() {
+
     }
 }
