@@ -49,6 +49,9 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         email.setText(null);
         password.setText(null);
         confirm_password.setText(null);
+        /*
+        firstname.setPrivateImeOptions("defaultInputmode=korea;");
+        lastname.setPrivateImeOptions("defaultInputmode=korea;");*/
 
         reg.setOnClickListener(new View.OnClickListener() {
             @Override

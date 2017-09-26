@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:src="@drawable/register"
+                android:src="@drawable/iv_register_logo"
                 tools:ignore="ContentDescription" />
 
 
@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/iv_user_icon"
-                    android:layout_marginLeft="1dp"
+
                     android:paddingRight="5dp"
                     />
 
@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="1dp"
-                    android:paddingRight="5dp"
+                    android:paddingRight="4.5dp"
                     android:src="@drawable/iv_email_icon" />
 
                 <EditText
@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/iv_pw_icon"
-                    android:paddingRight="3dp"
+                    android:paddingRight="5dp"
                     />
 
                 <EditText

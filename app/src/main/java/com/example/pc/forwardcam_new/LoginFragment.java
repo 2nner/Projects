@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -57,8 +58,8 @@ public class LoginFragment extends android.support.v4.app.Fragment {
                 doLogin();
             }
         });
-
-        /*btn_test.setOnClickListener(new View.OnClickListener() {  // 태현이가 추가한거 (임시로)
+        /*
+        btn_test.setOnClickListener(new View.OnClickListener() {  // 태현이가 추가한거 (임시로)
             @Override
             public void onClick(View v) {                      // 태현이가 추가한거 (임시로)
                 Intent intent = new Intent(LoginFragment.this.getActivity(), SlideActivity.class);

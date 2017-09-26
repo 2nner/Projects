@@ -39,7 +39,7 @@ import java.util.Set;
 
 public class BluetoothActivity extends AppCompatActivity {
 
-    //BluetoothAdapter ~~~~
+    //BluetoothAdapter
     BluetoothAdapter mBluetoothAdapter;
 
     //블루투스 요청 액티비티 코드
