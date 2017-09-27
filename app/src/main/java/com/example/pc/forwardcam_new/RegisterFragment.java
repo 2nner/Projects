@@ -1,5 +1,7 @@
 package com.example.pc.forwardcam_new;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,18 +23,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterFragment extends android.support.v4.app.Fragment {
 
+    //private BackPressCloseHandler backPressCloseHandler;
     EditText lastname, firstname, email, password, confirm_password;
     ImageButton reg;
     ProgressBar progress;
     private Context context;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //backPressCloseHandler = new BackPressCloseHandler(this.getActivity());
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         context = getActivity();
         initViews(view);
         return view;
     }
+
 
     private void initViews(View view) {
         lastname = (EditText) view.findViewById(R.id.et_lastname);
@@ -180,4 +186,6 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         ft.addToBackStack(null);
         ft.commit();
     }
+
+
 }

@@ -11,6 +11,7 @@ import com.rd.PageIndicatorView;
 
 
 public class SlideActivity extends AppCompatActivity {
+    private BackPressCloseHandler backPressCloseHandler;
     ViewPager vp; // 뷰페이지 변수 선언
     ImageButton btn_home_home;
     ImageButton btn_home_bluetooth;
@@ -20,6 +21,7 @@ public class SlideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.slidemain);
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         // 아이디로 뷰페이지와 각 버튼을 컨트롤 할 수 있게 함
         vp=(ViewPager)findViewById(R.id.vp);
@@ -44,6 +46,9 @@ public class SlideActivity extends AppCompatActivity {
         pageIndicatorView.setViewPager(vp);
 
     }
+
+    @Override public void onBackPressed() { //super.onBackPressed();
+        backPressCloseHandler.onBackPressed(); }
 
 
     View.OnClickListener movePageListener = new View.OnClickListener()

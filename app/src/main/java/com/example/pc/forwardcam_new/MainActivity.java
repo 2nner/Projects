@@ -9,15 +9,22 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences pref;
+    //private BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //backPressCloseHandler = new BackPressCloseHandler(this);
         pref = getSharedPreferences("pref", MODE_PRIVATE);
         initFragment();
         //
     }
+
+    /*
+    @Override public void onBackPressed() { //super.onBackPressed();
+        backPressCloseHandler.onBackPressed(); }*/
 
     private void initFragment() {
         android.support.v4.app.Fragment fragment;
@@ -42,6 +49,5 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.fragment_frame,fragment);
         ft.commit();
     }
-
 
 }

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class UserFragment extends Fragment {
     Context context;
     ImageButton change_pw; // 태현이가 추가한 버튼(비밀번호 변경)
     TextView tv_fullname, tv_email;
+    ProgressBar progress;
 
     public  UserFragment(){}
 
@@ -107,7 +109,7 @@ public class UserFragment extends Fragment {
 
     private void initViews(View view) {
         pref = getActivity().getSharedPreferences("pref", MODE_PRIVATE);
-
+        progress = (ProgressBar) view.findViewById(R.id.progress);
         logout = (ImageButton) view.findViewById(R.id.logout);
         change_pw = (ImageButton) view.findViewById(R.id.btn_user_pw); // 태현이가 추가함 (용도: Alertdialog)
         tv_fullname = (TextView) view.findViewById(R.id.tv_fullname);
@@ -118,6 +120,7 @@ public class UserFragment extends Fragment {
             public void onClick(View v) {
                 show();
             }
+
         });
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -181,12 +184,13 @@ public class UserFragment extends Fragment {
                 if(resp.getResult().equals(Constants.SUCCESS)) {
                     Toast.makeText(context, resp.getMessage(), Toast.LENGTH_LONG).show();
                 }
+                //progress.setVisibility(View.VISIBLE);
 
             }
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
-
+                //progress.setVisibility(View.VISIBLE);
                 Log.d(Constants.TAG,"failed");
                 Toast.makeText(context, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 

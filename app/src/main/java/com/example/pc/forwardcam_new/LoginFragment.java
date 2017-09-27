@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class LoginFragment extends android.support.v4.app.Fragment {
+   // private BackPressCloseHandler backPressCloseHandler;
 
     EditText email, password;
     ImageButton loginBtn;
@@ -32,6 +36,16 @@ public class LoginFragment extends android.support.v4.app.Fragment {
     SharedPreferences pref;
     private Context context;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+       // backPressCloseHandler = new BackPressCloseHandler(this.getActivity());
+
+        /*
+        getActivity().onBackPressed();{
+            backPressCloseHandler.onBackPressed();
+        }*/
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +53,14 @@ public class LoginFragment extends android.support.v4.app.Fragment {
         context = getActivity();
         initViews(view);
         return view;
+
     }
+
+/*
+    @Override public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed(); }*/
+
 
     private void initViews(View view) {
 
