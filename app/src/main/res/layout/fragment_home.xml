@@ -48,10 +48,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="30dp">
+        android:layout_marginBottom="100dp">
 
         <TextView
-            android:id="@+id/tv_totalAvoidedValue"
+            android:id="@+id/tv_totalSensoredValue"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -61,7 +61,7 @@
             android:textSize="30dp"/>
 
         <TextView
-            android:id="@+id/tv_totalSensoredValue"
+            android:id="@+id/tv_totalAvoidedValue"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

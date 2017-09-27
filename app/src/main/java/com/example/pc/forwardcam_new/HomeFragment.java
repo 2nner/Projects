@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
                 .build());
 
         SeriesItem seriesItem1 = new SeriesItem.Builder(Color.argb(255, 64, 196, 0))
-                .setRange(0, 100, percentageValue)
+                .setRange(0, 100, 80)
                 .build();
 
         int series1Index = decoView.addSeries(seriesItem1);
