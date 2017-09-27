@@ -1,339 +1,513 @@
 package com.example.pc.forwardcam_new;
 
-import android.app.Activity;
-import android.os.Bundle;
-
-
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.bluetooth.BluetoothSocket;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.database.DataSetObserver;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ListAdapter;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Set;
+import java.util.UUID;
 
-
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class BluetoothActivity extends AppCompatActivity {
 
-    //BluetoothAdapter
-    BluetoothAdapter mBluetoothAdapter;
 
-    //블루투스 요청 액티비티 코드
-    final static int BLUETOOTH_REQUEST_CODE = 100;
+    private final int REQUEST_BLUETOOTH_ENABLE = 100;
 
-    //UI
-    TextView txtState;
-    Button btnSearch;
-    CheckBox chkFindme;
-    ListView listPaired;
-    ListView listDevice;
+    private TextView mConnectionStatus;
+    private EditText mInputEditText;
+    SharedPreferences pref;
 
-    //Adapter
-    SimpleAdapter adapterPaired;
-    SimpleAdapter adapterDevice;
-
-    //list - Device 목록 저장
-    List<Map<String,String>> dataPaired;
-    List<Map<String,String>> dataDevice;
-    List<BluetoothDevice> bluetoothDevices;
-    int selectDevice;
-
-
+    ConnectedTask mConnectedTask = null;
+    static BluetoothAdapter mBluetoothAdapter;
+    private String mConnectedDeviceName = null;
+    private ArrayAdapter<String> mConversationArrayAdapter;
+    static boolean isConnectionError = false;
+    private static final String TAG = "BluetoothClient";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
 
+        /*
+        Button sendButton = (Button)findViewById(R.id.send_button);
+        sendButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                String sendMessage = mInputEditText.getText().toString();
+                if ( sendMessage.length() > 0 ) {
+                    sendMessage(sendMessage);
+                }
+            }
+        });*/
+        pref = this.getSharedPreferences("pref",MODE_PRIVATE);
 
-        //UI
-        txtState = (TextView)findViewById(R.id.txtState);
-        chkFindme = (CheckBox)findViewById(R.id.chkFindme);
-        btnSearch = (Button)findViewById(R.id.btnSearch);
-        listPaired = (ListView)findViewById(R.id.listPaired);
-        listDevice = (ListView)findViewById(R.id.listDevice);
+        mConnectionStatus = (TextView)findViewById(R.id.connection_status_textview);
+        mInputEditText = (EditText)findViewById(R.id.input_string_edittext);
+        ListView mMessageListview = (ListView) findViewById(R.id.message_listview);
 
-        //Adapter1
-        dataPaired = new ArrayList<>();
-        adapterPaired = new SimpleAdapter(this, dataPaired, android.R.layout.simple_list_item_2, new String[]{"name","address"}, new int[]{android.R.id.text1, android.R.id.text2});
-        listPaired.setAdapter(adapterPaired);
-        //Adapter2
-        dataDevice = new ArrayList<>();
-        adapterDevice = new SimpleAdapter(this, dataDevice, android.R.layout.simple_list_item_2, new String[]{"name","address"}, new int[]{android.R.id.text1, android.R.id.text2});
-        listDevice.setAdapter(adapterDevice);
+        mConversationArrayAdapter = new ArrayAdapter<>( this,
+                android.R.layout.simple_list_item_1 );
+        mMessageListview.setAdapter(mConversationArrayAdapter);
 
-        //검색된 블루투스 디바이스 데이터
-        bluetoothDevices = new ArrayList<>();
-        //선택한 디바이스 없음
-        selectDevice = -1;
 
-        //블루투스 지원 유무 확인
+        Log.d( TAG, "Initalizing Bluetooth adapter...");
+        //1.블루투스 사용 가능한지 검사합니다.
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        //블루투스를 지원하지 않으면 null을 리턴한다
-        if(mBluetoothAdapter == null){
-            Toast.makeText(this, "블루투스를 지원하지 않는 단말기 입니다.", Toast.LENGTH_SHORT).show();
-            finish();
+        if (mBluetoothAdapter == null) {
+            showErrorDialog("This device is not implement Bluetooth.");
             return;
         }
 
-        //블루투스 브로드캐스트 리시버 등록
-        //리시버1
-        IntentFilter stateFilter = new IntentFilter();
-        stateFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED); //BluetoothAdapter.ACTION_STATE_CHANGED : 블루투스 상태변화 액션
-        registerReceiver(mBluetoothStateReceiver, stateFilter);
-        //리시버2
-        IntentFilter searchFilter = new IntentFilter();
-        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED); //BluetoothAdapter.ACTION_DISCOVERY_STARTED : 블루투스 검색 시작
-        searchFilter.addAction(BluetoothDevice.ACTION_FOUND); //BluetoothDevice.ACTION_FOUND : 블루투스 디바이스 찾음
-        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED); //BluetoothAdapter.ACTION_DISCOVERY_FINISHED : 블루투스 검색 종료
-        searchFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-        registerReceiver(mBluetoothSearchReceiver, searchFilter);
-        //리시버3
-        IntentFilter scanmodeFilter = new IntentFilter();
-        scanmodeFilter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
-        registerReceiver(mBluetoothScanmodeReceiver, scanmodeFilter);
-
-
-
-        //1. 블루투스가 꺼져있으면 활성화
-//        if(!mBluetoothAdapter.isEnabled()){
-//            mBluetoothAdapter.enable(); //강제 활성화
-//        }
-
-        //2. 블루투스가 꺼져있으면 사용자에게 활성화 요청하기
-        if(!mBluetoothAdapter.isEnabled()){
+        if (!mBluetoothAdapter.isEnabled()) {
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(intent, BLUETOOTH_REQUEST_CODE);
-        }else{
-            GetListPairedDevice();
+            startActivityForResult(intent, REQUEST_BLUETOOTH_ENABLE);
         }
+        else {
+            Log.d(TAG, "Initialisation successful.");
 
-
-        //검색된 디바이스목록 클릭시 페어링 요청
-        listDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BluetoothDevice device = bluetoothDevices.get(position);
-
-                try {
-                    //선택한 디바이스 페어링 요청
-                    Method method = device.getClass().getMethod("createBond", (Class[]) null);
-                    method.invoke(device, (Object[]) null);
-                    selectDevice = position;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-
-    //블루투스 상태변화 BroadcastReceiver
-    BroadcastReceiver mBluetoothStateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //BluetoothAdapter.EXTRA_STATE : 블루투스의 현재상태 변화
-            int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
-
-            //블루투스 활성화
-            if(state == BluetoothAdapter.STATE_ON){
-                txtState.setText("블루투스 활성화");
-            }
-            //블루투스 활성화 중
-            else if(state == BluetoothAdapter.STATE_TURNING_ON){
-                txtState.setText("블루투스 활성화 중...");
-            }
-            //블루투스 비활성화
-            else if(state == BluetoothAdapter.STATE_OFF){
-                txtState.setText("블루투스 비활성화");
-            }
-            //블루투스 비활성화 중
-            else if(state == BluetoothAdapter.STATE_TURNING_OFF){
-                txtState.setText("블루투스 비활성화 중...");
-            }
-        }
-    };
-
-    //블루투스 검색결과 BroadcastReceiver
-    BroadcastReceiver mBluetoothSearchReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            switch(action){
-                case BluetoothAdapter.ACTION_DISCOVERY_STARTED:
-                    Log.d(this.getClass().getName(),"블루투스 검색 시작");
-                    dataDevice.clear();
-                    bluetoothDevices.clear();
-                    Toast.makeText(BluetoothActivity.this, "블루투스 검색 시작", Toast.LENGTH_SHORT).show();
-                    break;
-                //블루투스 디바이스 찾음
-                case BluetoothDevice.ACTION_FOUND:
-                    Log.d(this.getClass().getName(),"디바이스를 찾았음");
-                    Toast.makeText(BluetoothActivity.this, "블루투스 디바이스 객체 구하는중", Toast.LENGTH_SHORT).show();
-                    //검색한 블루투스 디바이스의 객체를 구한다
-                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                    //데이터 저장
-                    Map map = new HashMap();
-                    map.put("name", device.getName()); //device.getName() : 블루투스 디바이스의 이름
-                    map.put("address", device.getAddress()); //device.getAddress() : 블루투스 디바이스의 MAC 주소
-                    dataDevice.add(map);
-                    //리스트 목록갱신
-                    adapterDevice.notifyDataSetChanged();
-
-                    //블루투스 디바이스 저장
-                    bluetoothDevices.add(device);
-                    break;
-                //블루투스 디바이스 검색 종료
-                case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
-                    Toast.makeText(BluetoothActivity.this, "블루투스 검색 종료", Toast.LENGTH_SHORT).show();
-                    btnSearch.setEnabled(true);
-                    break;
-                //블루투스 디바이스 페어링 상태 변화
-                case BluetoothDevice.ACTION_BOND_STATE_CHANGED:
-                    Log.d(this.getClass().getName(),"페어링 상태체크");
-                    BluetoothDevice paired = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                    if(paired.getBondState()==BluetoothDevice.BOND_BONDED){
-                        //데이터 저장
-                        Map map2 = new HashMap();
-                        map2.put("name", paired.getName()); //device.getName() : 블루투스 디바이스의 이름
-                        map2.put("address", paired.getAddress()); //device.getAddress() : 블루투스 디바이스의 MAC 주소
-                        dataPaired.add(map2);
-                        //리스트 목록갱신
-                        adapterPaired.notifyDataSetChanged();
-                        Log.d(this.getClass().getName(),"페어링 리스트 목록 갱신");
-
-                        //검색된 목록
-                        if(selectDevice != -1){
-                            bluetoothDevices.remove(selectDevice);
-
-                            dataDevice.remove(selectDevice);
-                            adapterDevice.notifyDataSetChanged();
-                            selectDevice = -1;
-                        }
-                    }
-                    break;
-            }
-        }
-    };
-
-    //블루투스 검색응답 모드 BroadcastReceiver
-    BroadcastReceiver mBluetoothScanmodeReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int state = intent.getIntExtra(BluetoothAdapter.EXTRA_SCAN_MODE, -1);
-            switch (state){
-                case BluetoothAdapter.SCAN_MODE_CONNECTABLE:
-                case BluetoothAdapter.SCAN_MODE_NONE:
-                    chkFindme.setChecked(false);
-                    chkFindme.setEnabled(true);
-                    Toast.makeText(BluetoothActivity.this, "검색응답 모드 종료", Toast.LENGTH_SHORT).show();
-                    break;
-                case BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE:
-                    Toast.makeText(BluetoothActivity.this, "다른 블루투스 기기에서 내 휴대폰을 찾을 수 있습니다.", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
-    };
-
-
-    //블루투스 검색 버튼 클릭
-    public void mOnBluetoothSearch(View v){
-        //검색버튼 비활성화
-        btnSearch.setEnabled(false);
-        //mBluetoothAdapter.isDiscovering() : 블루투스 검색중인지 여부 확인
-        //mBluetoothAdapter.cancelDiscovery() : 블루투스 검색 취소
-        if(mBluetoothAdapter.isDiscovering()){
-            mBluetoothAdapter.cancelDiscovery();
-        }
-        //mBluetoothAdapter.startDiscovery() : 블루투스 검색 시작
-        mBluetoothAdapter.startDiscovery();
-    }
-
-
-    //검색응답 모드 - 블루투스가 외부 블루투스의 요청에 답변하는 슬레이브 상태
-    //BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE : 검색응답 모드 활성화 + 페이지 모드 활성화
-    //BluetoothAdapter.SCAN_MODE_CONNECTABLE : 검색응답 모드 비활성화 + 페이지 모드 활성화
-    //BluetoothAdapter.SCAN_MODE_NONE : 검색응답 모드 비활성화 + 페이지 모드 비활성화
-    //검색응답 체크박스 클릭
-    public void mOnChkFindme(View v){
-        //검색응답 체크
-        if(chkFindme.isChecked()){
-            if(mBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE){ //검색응답 모드가 활성화이면 하지 않음
-                Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-                intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 60);  //60초 동안 상대방이 나를 검색할 수 있도록한다
-                startActivity(intent);
-            }
-        }
-    }
-
-    //이미 페어링된 목록 가져오기
-    public void GetListPairedDevice(){
-        Set<BluetoothDevice> pairedDevice = mBluetoothAdapter.getBondedDevices();
-
-        dataPaired.clear();
-        if(pairedDevice.size() > 0){
-            for(BluetoothDevice device : pairedDevice){
-                //데이터 저장
-                Map map = new HashMap();
-                map.put("name", device.getName()); //device.getName() : 블루투스 디바이스의 이름
-                map.put("address", device.getAddress()); //device.getAddress() : 블루투스 디바이스의 MAC 주소
-                dataPaired.add(map);
-            }
-        }
-        //리스트 목록갱신
-        adapterPaired.notifyDataSetChanged();
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode){
-            case BLUETOOTH_REQUEST_CODE:
-                //블루투스 활성화 승인
-                if(resultCode == Activity.RESULT_OK){
-                    GetListPairedDevice();
-                }
-                //블루투스 활성화 거절
-                else{
-                    Toast.makeText(this, "블루투스를 활성화해야 합니다.", Toast.LENGTH_SHORT).show();
-                    finish();
-                    return;
-                }
-                break;
+            //2. 페어링 되어 있는 블루투스 장치들의 목록을 보여줍니다.
+            //3. 목록에서 블루투스 장치를 선택하면 선택한 디바이스를 인자로 하여
+            //   doConnect 함수가 호출됩니다.
+            showPairedDevicesListDialog();
         }
     }
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(mBluetoothStateReceiver);
-        unregisterReceiver(mBluetoothSearchReceiver);
-        unregisterReceiver(mBluetoothScanmodeReceiver);
         super.onDestroy();
+
+        if ( mConnectedTask != null ) {
+
+            mConnectedTask.cancel(true);
+        }
     }
 
+    //runs while listening for incoming connections.
+    private class ConnectTask extends AsyncTask<Void, Void, Boolean> {
+
+        private BluetoothSocket mBluetoothSocket = null;
+        private BluetoothDevice mBluetoothDevice = null;
+
+        ConnectTask(BluetoothDevice bluetoothDevice) {
+            mBluetoothDevice = bluetoothDevice;
+            mConnectedDeviceName = bluetoothDevice.getName();
+
+            //SPP
+            UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+
+            // Get a BluetoothSocket for a connection with the
+            // given BluetoothDevice
+            try {
+                mBluetoothSocket = mBluetoothDevice.createRfcommSocketToServiceRecord(uuid);
+                Log.d( TAG, "create socket for "+mConnectedDeviceName);
+
+            } catch (IOException e) {
+                Log.e( TAG, "socket create failed " + e.getMessage());
+            }
+
+            mConnectionStatus.setText("connecting...");
+        }
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            // Always cancel discovery because it will slow down a connection
+            mBluetoothAdapter.cancelDiscovery();
+
+            // Make a connection to the BluetoothSocket
+            try {
+                // This is a blocking call and will only return on a
+                // successful connection or an exception
+                mBluetoothSocket.connect();
+            } catch (IOException e) {
+                // Close the socket
+                try {
+                    mBluetoothSocket.close();
+                } catch (IOException e2) {
+                    Log.e(TAG, "unable to close() " +
+                            " socket during connection failure", e2);
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
+
+        @Override
+        protected void onPostExecute(Boolean isSucess) {
+
+            if ( isSucess ) {
+                connected(mBluetoothSocket);
+            }
+            else{
+
+                isConnectionError = true;
+                Log.d( TAG,  "Unable to connect device");
+                showErrorDialog("Unable to connect device");
+            }
+        }
+    }
+
+
+    public void connected( BluetoothSocket socket ) {
+        mConnectedTask = new ConnectedTask(socket);
+        mConnectedTask.execute();
+    }
+
+
+    /**
+     * This thread runs during a connection with a remote device.
+     * It handles all incoming and outgoing transmissions.
+     */
+    private class ConnectedTask extends AsyncTask<Void, String, Boolean> {
+
+        private InputStream mInputStream = null;
+        private OutputStream mOutputStream = null;
+        private BluetoothSocket mBluetoothSocket = null;
+
+        ConnectedTask(BluetoothSocket socket){
+
+            mBluetoothSocket = socket;
+            try {
+                mInputStream = mBluetoothSocket.getInputStream();
+                mOutputStream = mBluetoothSocket.getOutputStream();
+            } catch (IOException e) {
+                Log.e(TAG, "socket not created", e );
+            }
+
+            Log.d( TAG, "connected to "+mConnectedDeviceName);
+            mConnectionStatus.setText( "connected to "+mConnectedDeviceName);
+        }
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            byte [] readBuffer = new byte[1024];
+            int readBufferPosition = 0;
+
+            // Keep listening to the InputStream while connected
+            while (true) {
+
+                if ( isCancelled() ) return false;
+
+                try {
+
+                    int bytesAvailable = mInputStream.available();
+
+                    if(bytesAvailable > 0) {
+
+                        byte[] packetBytes = new byte[bytesAvailable];
+                        // Read from the InputStream
+                        mInputStream.read(packetBytes);
+
+                        for(int i=0;i<bytesAvailable;i++) {
+
+                            byte b = packetBytes[i];
+                            if(b == '\n')
+                            {
+                                byte[] encodedBytes = new byte[readBufferPosition];
+                                System.arraycopy(readBuffer, 0, encodedBytes, 0,
+                                        encodedBytes.length);
+                                String recvMessage = new String(encodedBytes, "UTF-8");
+                                String danger = "danger";
+                                String collision = "Collision";
+                                readBufferPosition = 0;
+
+                                Log.d(TAG, "recv message: " + recvMessage);
+                                String bool;
+                                if (recvMessage.equals(danger)) bool = "true";
+                                else bool="false";
+
+                                Log.d(TAG, "TrueOrFalse : "+bool);
+                                if(recvMessage.equals(danger)) {
+                                    addSensored(pref.getString(Constants.EMAIL,""));
+                                    Log.d(Constants.TAG, "Danger Method on");
+                                }
+                                if (recvMessage.equals(collision)) {
+                                    editCrashedValue(pref.getString(Constants.EMAIL,""));
+                                    Log.d(Constants.TAG, "Collision Method on");
+                                }
+                                publishProgress(recvMessage);
+
+                            }
+                            else
+                            {
+                                readBuffer[readBufferPosition++] = b;
+                            }
+                        }
+                    }
+                } catch (IOException e) {
+
+                    Log.e(TAG, "disconnected", e);
+                    return false;
+                }
+            }
+
+        }
+
+        @Override
+        protected void onProgressUpdate(String... recvMessage) {
+
+            mConversationArrayAdapter.insert(mConnectedDeviceName + ": " + recvMessage[0], 0);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isSucess) {
+            super.onPostExecute(isSucess);
+
+            if ( !isSucess ) {
+
+
+                closeSocket();
+                Log.d(TAG, "Device connection was lost");
+                isConnectionError = true;
+                showErrorDialog("Device connection was lost");
+            }
+        }
+
+        @Override
+        protected void onCancelled(Boolean aBoolean) {
+            super.onCancelled(aBoolean);
+
+            closeSocket();
+        }
+
+        void closeSocket(){
+
+            try {
+
+                mBluetoothSocket.close();
+                Log.d(TAG, "close socket()");
+
+            } catch (IOException e2) {
+
+                Log.e(TAG, "unable to close() " +
+                        " socket during connection failure", e2);
+            }
+        }
+
+        void write(String msg){
+
+            msg += "\n";
+
+            try {
+                mOutputStream.write(msg.getBytes());
+                mOutputStream.flush();
+            } catch (IOException e) {
+                Log.e(TAG, "Exception during send", e );
+            }
+
+            mInputEditText.setText(" ");
+        }
+    }
+
+
+    public void showPairedDevicesListDialog()
+    {
+        Set<BluetoothDevice> devices = mBluetoothAdapter.getBondedDevices();
+        final BluetoothDevice[] pairedDevices = devices.toArray(new BluetoothDevice[0]);
+
+        if ( pairedDevices.length == 0 ){
+            showQuitDialog( "No devices have been paired.\n"
+                    +"You must pair it with another device.");
+            return;
+        }
+
+        String[] items;
+        items = new String[pairedDevices.length];
+        for (int i=0;i<pairedDevices.length;i++) {
+            items[i] = pairedDevices[i].getName();
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select device");
+        builder.setCancelable(false);
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+                // Attempt to connect to the device
+                ConnectTask task = new ConnectTask(pairedDevices[which]);
+                task.execute();
+            }
+        });
+        builder.create().show();
+    }
+
+
+
+    public void showErrorDialog(String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Quit");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK",  new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                if ( isConnectionError  ) {
+                    isConnectionError = false;
+                    finish();
+                }
+            }
+        });
+        builder.create().show();
+    }
+
+
+    public void showQuitDialog(String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Quit");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK",  new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        builder.create().show();
+    }
+
+    /*
+    void sendMessage(String msg){
+
+        if ( mConnectedTask != null ) {
+            mConnectedTask.write(msg);
+            Log.d(TAG, "send message: " + msg);
+            mConversationArrayAdapter.insert("Me:  " + msg, 0);
+        }
+    }*/
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode == REQUEST_BLUETOOTH_ENABLE){
+            if (resultCode == RESULT_OK){
+                //BlueTooth is now Enabled
+                showPairedDevicesListDialog();
+            }
+            if(resultCode == RESULT_CANCELED){
+                showQuitDialog( "You need to enable bluetooth");
+            }
+        }
+    }
+
+    private void addSensored(String email) {
+
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        client.addInterceptor(loggingInterceptor);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client.build())
+                .build();
+
+        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+
+        User user = new User();
+        user.setEmail(email);
+        ServerRequest request = new ServerRequest();
+        request.setOperation(Constants.SENSOR_OPERATION);
+        request.setUser(user);
+        Call<ServerResponse> response = requestInterface.operation(request);
+
+        response.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+
+                ServerResponse resp = response.body();
+
+                if(resp.getResult().equals(Constants.SUCCESS)){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+
+                Log.d(Constants.TAG,"failed");
+                Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    private void editCrashedValue(String email) {
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        client.addInterceptor(loggingInterceptor);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client.build())
+                .build();
+
+        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+
+        User user = new User();
+        user.setEmail(email);
+        ServerRequest request = new ServerRequest();
+        request.setOperation(Constants.COLLISION_OPERATION);
+        request.setUser(user);
+        Call<ServerResponse> response = requestInterface.operation(request);
+
+        response.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+
+                ServerResponse resp = response.body();
+
+                if(resp.getResult().equals(Constants.SUCCESS)){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+
+                Log.d(Constants.TAG,"failed");
+                Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
 }

@@ -43,8 +43,6 @@ public class UserFragment extends Fragment {
 
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_user, container, false);
@@ -52,7 +50,6 @@ public class UserFragment extends Fragment {
         initViews(layout);
         return layout;
     }
-
 
     void show()
     {
@@ -69,14 +66,14 @@ public class UserFragment extends Fragment {
             public void onClick(View v) {                      // OK버튼 눌렀을 때 처리
                 String strPW_01 = pw_01.getText().toString();
                 String strPW_02 = pw_02.getText().toString();
-                Toast.makeText(getActivity().getApplicationContext(), strPW_01+"말로만 변경완료"+strPW_02,Toast.LENGTH_LONG).show();
+
+                changePassword(pref.getString(Constants.EMAIL,""), strPW_01, strPW_02);
 
                 dialog.dismiss();
             }
         });
         dialog.show();
     }
-
 
     /*
     void show()  // 태현이가 추가한 메소드 (Alertdialog 에 사용됨)
@@ -130,7 +127,9 @@ public class UserFragment extends Fragment {
             }
         });
 
-        tv_fullname.setText((String)(pref.getString(Constants.LASTNAME,"")+" "+pref.getString(Constants.FIRSTNAME,"")));
+
+
+        tv_fullname.setText(pref.getString(Constants.LASTNAME,"")+" "+pref.getString(Constants.FIRSTNAME,""));
         tv_email.setText(pref.getString(Constants.EMAIL,""));
     }
 
@@ -166,6 +165,8 @@ public class UserFragment extends Fragment {
 
         User user = new User();
         user.setEmail(email);
+        user.setOld_password(old_password);
+        user.setNew_password(new_password);
         ServerRequest request = new ServerRequest();
         request.setOperation(Constants.CHANGE_PASSWORD_OPERATION);
         request.setUser(user);
@@ -177,7 +178,9 @@ public class UserFragment extends Fragment {
 
                 ServerResponse resp = response.body();
 
-                if(resp.getResult().equals(Constants.SUCCESS)){}
+                if(resp.getResult().equals(Constants.SUCCESS)) {
+                    Toast.makeText(context, resp.getMessage(), Toast.LENGTH_LONG).show();
+                }
 
             }
 
