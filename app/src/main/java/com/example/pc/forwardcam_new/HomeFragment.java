@@ -2,10 +2,7 @@ package com.example.pc.forwardcam_new;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hookedonplay.decoviewlib.DecoView;
+import com.hookedonplay.decoviewlib.charts.SeriesItem;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -25,10 +25,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HomeFragment extends Fragment {
 
     private Context context;
-    Canvas canvas;
     TextView totalSensoredValue, totalAvoidedValue;
     SharedPreferences pref;
-    int int_totalSensoredValue, int_totalAvoidedValue;
+    int int_totalSensoredValue=0, int_totalAvoidedValue=0;
+    int percentageValue;
 
     public HomeFragment(){}
 
@@ -42,9 +42,7 @@ public class HomeFragment extends Fragment {
         context = getActivity();
 
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_home, container, false);
-        LinearLayout graphLayout = (LinearLayout) layout.findViewById(R.id.graphLayout);
         initViews(layout);
-        graphLayout.addView(new CircleGraph(context));
         return layout;
     }
 
@@ -57,6 +55,27 @@ public class HomeFragment extends Fragment {
         setTodayTotalValue(pref.getString(Constants.EMAIL,""));
         setTodayAvoidedValue(pref.getString(Constants.EMAIL,""));
 
+        if(int_totalSensoredValue == 0) {
+            percentageValue = 0;
+        } else {
+            percentageValue = (int_totalAvoidedValue / int_totalSensoredValue)*100;
+        }
+
+        Log.d(Constants.TAG,"TotalSensored : "+ int_totalAvoidedValue);
+        Log.d(Constants.TAG,"percent : "+percentageValue);
+
+        DecoView decoView = (DecoView) view.findViewById(R.id.circleGraph);
+        decoView.addSeries(new SeriesItem.Builder(Color.argb(255, 226, 226, 226))
+                .setRange(0, 100, 100)
+                .build());
+
+        SeriesItem seriesItem1 = new SeriesItem.Builder(Color.argb(255, 64, 196, 0))
+                .setRange(0, 100, percentageValue)
+                .build();
+
+        int series1Index = decoView.addSeries(seriesItem1);
+
+        //decoView.addEvent();
     }
 
     private void setTodayTotalValue (String email) {
@@ -81,11 +100,12 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
 
                 ServerResponse resp = response.body();
-                int_totalSensoredValue = resp.getValue();
 
                 if (resp.getResult().equals(Constants.SUCCESS)) {
 
+                    int_totalSensoredValue = resp.getValue();
                     totalSensoredValue.setText(String.valueOf(int_totalSensoredValue));
+
                 }
             }
 
@@ -121,11 +141,12 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
 
                 ServerResponse resp = response.body();
-                int_totalAvoidedValue = resp.getValue();
-
 
                 if (resp.getResult().equals(Constants.SUCCESS)) {
+
+                    int_totalAvoidedValue = resp.getValue();
                     totalAvoidedValue.setText(String.valueOf(int_totalAvoidedValue));
+
                 }
             }
 
@@ -139,43 +160,4 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public class CircleGraph extends View {
-
-        Paint p = new Paint();
-
-        public CircleGraph(Context context) {
-            super(context);
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-
-            final float ZERO = -90f; //drawAcr를 이용하면 오른쪽이 0도가 된다. 일반적으로 가장 위를 0으로 보기 때문에 - 90도를 해준다.
-            final float DOTONE = 3.6f;
-            if(int_totalSensoredValue == 0) {
-                int_totalSensoredValue = 1;
-            }
-            float value = (float) (int_totalAvoidedValue / int_totalSensoredValue)*100;
-            float degree = value * DOTONE;
-
-            p.setAntiAlias(true);
-            p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(5);
-            p.setAlpha(0x00);
-
-            RectF rectF = new RectF(0, 0, 200, 200);
-
-            if (degree < 25) {
-                p.setColor(Color.RED);
-            } else if (degree < 50) {
-                p.setColor(Color.YELLOW);
-            } else if (degree < 75) {
-                p.setColor(Color.BLUE);
-            } else if (degree <= 100) {
-                p.setColor(Color.GREEN);
-            } //점수에 맞춰 점수 원의 색을 변경한다.
-
-            canvas.drawArc(rectF, ZERO, degree, false, p);
-        }
-    }
 }
