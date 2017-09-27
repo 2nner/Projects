@@ -86,7 +86,6 @@ public class HomeFragment extends Fragment {
                 if (resp.getResult().equals(Constants.SUCCESS)) {
 
                     totalSensoredValue.setText(String.valueOf(int_totalSensoredValue));
-
                 }
             }
 
