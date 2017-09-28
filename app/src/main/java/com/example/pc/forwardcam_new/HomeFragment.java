@@ -52,30 +52,9 @@ public class HomeFragment extends Fragment {
         totalSensoredValue = (TextView) view.findViewById(R.id.tv_totalSensoredValue);
         totalAvoidedValue = (TextView) view.findViewById(R.id.tv_totalAvoidedValue);
 
+
         setTodayTotalValue(pref.getString(Constants.EMAIL,""));
-        setTodayAvoidedValue(pref.getString(Constants.EMAIL,""));
 
-        if(int_totalSensoredValue == 0) {
-            percentageValue = 0;
-        } else {
-            percentageValue = (int_totalAvoidedValue / int_totalSensoredValue)*100;
-        }
-
-        Log.d(Constants.TAG,"TotalSensored : "+ int_totalAvoidedValue);
-        Log.d(Constants.TAG,"percent : "+percentageValue);
-
-        DecoView decoView = (DecoView) view.findViewById(R.id.circleGraph);
-        decoView.addSeries(new SeriesItem.Builder(Color.argb(255, 226, 226, 226))
-                .setRange(0, 100, 100)
-                .build());
-
-        SeriesItem seriesItem1 = new SeriesItem.Builder(Color.argb(255, 64, 196, 0))
-                .setRange(0, 100, 80)
-                .build();
-
-        int series1Index = decoView.addSeries(seriesItem1);
-
-        //decoView.addEvent();
     }
 
     private void setTodayTotalValue (String email) {
@@ -85,7 +64,7 @@ public class HomeFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+
 
         User user = new User();
         user.setEmail(email);
@@ -93,7 +72,10 @@ public class HomeFragment extends Fragment {
         ServerRequest request = new ServerRequest();
         request.setOperation(Constants.TODAY_TOTAL_OPERATION);
         request.setUser(user);
+
+        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
         Call<ServerResponse> response = requestInterface.operation(request);
+
 
         response.enqueue(new Callback<ServerResponse>() {
             @Override
@@ -105,8 +87,10 @@ public class HomeFragment extends Fragment {
 
                     int_totalSensoredValue = resp.getValue();
                     totalSensoredValue.setText(String.valueOf(int_totalSensoredValue));
-
                 }
+
+                setTodayAvoidedValue(pref.getString(Constants.EMAIL, ""));
+
             }
 
             @Override
@@ -116,7 +100,10 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(context, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
             }
+
+
         });
+
     }
 
     private void setTodayAvoidedValue (String email) {
@@ -148,6 +135,27 @@ public class HomeFragment extends Fragment {
                     totalAvoidedValue.setText(String.valueOf(int_totalAvoidedValue));
 
                 }
+
+                if(int_totalSensoredValue == 0) {
+                    percentageValue = 0;
+                } else {
+                    percentageValue = (int_totalAvoidedValue / int_totalSensoredValue)*100;
+                }
+
+                Log.d(Constants.TAG,"TotalSensored : "+ int_totalAvoidedValue);
+                Log.d(Constants.TAG,"percent : "+percentageValue);
+                DecoView decoView = (DecoView) getView().findViewById(R.id.circleGraph);
+
+                decoView.addSeries(new SeriesItem.Builder(Color.argb(255, 226, 226, 226))
+                        .setRange(0, 100, 100)
+                        .build());
+
+                SeriesItem seriesItem1 = new SeriesItem.Builder(Color.argb(255, 64, 196, 0))
+                        .setRange(0, 100, percentageValue)
+                        .build();
+
+                int series1Index = decoView.addSeries(seriesItem1);
+
             }
 
             @Override
@@ -159,5 +167,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
 
 }
