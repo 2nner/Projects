@@ -242,7 +242,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
                                 Log.d(TAG, "recv message : " + recvMessage);
 
-                                Log.d(TAG, "TrueOrFalse : "+ recvMessage.equals(danger));
+                                Log.d(TAG, "TF : "+ recvMessage.equals(danger));
                                 if(recvMessage.equals(danger)) {
                                     addSensored(pref.getString(Constants.EMAIL,""));
                                     Log.d(Constants.TAG, "Danger Method on");
