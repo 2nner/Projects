@@ -8,13 +8,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 
 public class BluetoothFragment extends Fragment{
 
-    Button btn_goTobluetooth;
+    ImageButton btn_goTobluetooth;
     private Context context;
     SharedPreferences pref;
 
@@ -30,7 +30,7 @@ public class BluetoothFragment extends Fragment{
     }
 
     private void initView(View view) {
-        btn_goTobluetooth = (Button) view.findViewById(R.id.btn_goTobluetooth);
+        btn_goTobluetooth = (ImageButton) view.findViewById(R.id.btn_goTobluetooth);
         btn_goTobluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
