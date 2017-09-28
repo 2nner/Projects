@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment {
     TextView totalSensoredValue, totalAvoidedValue;
     SharedPreferences pref;
     int int_totalSensoredValue=0, int_totalAvoidedValue=0;
-    int percentageValue;
+    float percentageValue;
 
     public HomeFragment(){}
 
@@ -52,8 +52,7 @@ public class HomeFragment extends Fragment {
         totalSensoredValue = (TextView) view.findViewById(R.id.tv_totalSensoredValue);
         totalAvoidedValue = (TextView) view.findViewById(R.id.tv_totalAvoidedValue);
 
-
-        setTodayTotalValue(pref.getString(Constants.EMAIL,""));
+        setTodayTotalValue(pref.getString(Constants.EMAIL, ""));
 
     }
 
@@ -63,8 +62,6 @@ public class HomeFragment extends Fragment {
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-
 
         User user = new User();
         user.setEmail(email);
@@ -88,9 +85,7 @@ public class HomeFragment extends Fragment {
                     int_totalSensoredValue = resp.getValue();
                     totalSensoredValue.setText(String.valueOf(int_totalSensoredValue));
                 }
-
                 setTodayAvoidedValue(pref.getString(Constants.EMAIL, ""));
-
             }
 
             @Override
@@ -136,15 +131,21 @@ public class HomeFragment extends Fragment {
 
                 }
 
+                DecoView decoView = (DecoView) getView().findViewById(R.id.circleGraph);
+                TextView percentView = (TextView) getView().findViewById(R.id.tv_percentage);
+
                 if(int_totalSensoredValue == 0) {
                     percentageValue = 0;
                 } else {
-                    percentageValue = (int_totalAvoidedValue / int_totalSensoredValue)*100;
+                    percentageValue = ((float)int_totalAvoidedValue / int_totalSensoredValue) * 100;
                 }
 
-                Log.d(Constants.TAG,"TotalSensored : "+ int_totalAvoidedValue);
+                String percentageValue_format = String.format("%.2f", percentageValue);
+                percentView.setText(percentageValue_format+"%");
+
+                Log.d(Constants.TAG,"TotalSensored : "+ int_totalSensoredValue);
+                Log.d(Constants.TAG,"TotalAvoided : " + int_totalAvoidedValue);
                 Log.d(Constants.TAG,"percent : "+percentageValue);
-                DecoView decoView = (DecoView) getView().findViewById(R.id.circleGraph);
 
                 decoView.addSeries(new SeriesItem.Builder(Color.argb(255, 226, 226, 226))
                         .setRange(0, 100, 100)

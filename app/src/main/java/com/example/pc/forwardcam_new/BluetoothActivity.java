@@ -234,19 +234,15 @@ public class BluetoothActivity extends AppCompatActivity {
                             if(b == '\n')
                             {
                                 byte[] encodedBytes = new byte[readBufferPosition];
-                                System.arraycopy(readBuffer, 0, encodedBytes, 0,
-                                        encodedBytes.length);
+                                System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                 String recvMessage = new String(encodedBytes, "UTF-8");
                                 String danger = "danger";
                                 String collision = "Collision";
                                 readBufferPosition = 0;
 
-                                Log.d(TAG, "recv message: " + recvMessage);
-                                String bool;
-                                if (recvMessage.equals(danger)) bool = "true";
-                                else bool="false";
+                                Log.d(TAG, "recv message : " + recvMessage);
 
-                                Log.d(TAG, "TrueOrFalse : "+bool);
+                                Log.d(TAG, "TrueOrFalse : "+ recvMessage.equals(danger));
                                 if(recvMessage.equals(danger)) {
                                     addSensored(pref.getString(Constants.EMAIL,""));
                                     Log.d(Constants.TAG, "Danger Method on");
