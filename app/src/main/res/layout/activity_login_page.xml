@@ -69,6 +69,7 @@
                         android:text="Name" />
 
                     <EditText
+                        android:id="@+id/et_loginID"
                         android:layout_width="194dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -86,12 +87,14 @@
                         android:text="Password" />
 
                     <EditText
+                        android:id="@+id/et_loginPassword"
                         android:layout_width="194dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:textSize="12sp" />
 
                     <ImageView
+                        android:id="@+id/iv_btnLogin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="45dp"
@@ -117,6 +120,7 @@
                         android:text="Don't have an account?" />
 
                     <TextView
+                        android:id="@+id/tv_goRegister"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"

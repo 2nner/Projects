@@ -39,7 +39,7 @@
         android:text="People to People Sport Item brrow Service" />
 
     <ImageView
-        android:id="@+id/iv_btnLogin"
+        android:id="@+id/iv_btnGoLoginPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
