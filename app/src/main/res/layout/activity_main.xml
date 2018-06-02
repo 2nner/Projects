@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="127dp"
+        android:src="@drawable/icon"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="31dp"
+        android:textSize="24sp"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="normal"
+        android:textColor="#333333"
+        android:lineSpacingExtra="4sp"
+        android:text="Sporrow" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="normal"
+        android:textColor="#a2a2a2"
+        android:lineSpacingExtra="2sp"
+        android:text="People to People Sport Item brrow Service" />
+
+    <ImageView
+        android:id="@+id/iv_btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="103dp"
+        android:src="@drawable/btn_login"/>
+
+    <ImageView
+        android:id="@+id/iv_btnRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/btn_resister"/>
+</LinearLayout>
