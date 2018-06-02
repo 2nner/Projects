@@ -1,8 +1,8 @@
 package com.highton.inner.sporrow.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,9 +27,8 @@ public class RegisterUser extends AppCompatActivity {
         findViewById(R.id.iv_btnNext).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("2nner","눌렸음");
                 if(password.getText().toString().equals(chkpassword.getText().toString())) {
-                    doRegister();
+                    startActivity(new Intent(RegisterUser.this, RegisterUserInfo.class));
                     finish();
                 }
                 else {
@@ -37,9 +36,5 @@ public class RegisterUser extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    public void doRegister() {
-
     }
 }
