@@ -74,7 +74,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:paddingBottom="10dp"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp"
+                        android:inputType="textEmailAddress"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -91,7 +92,8 @@
                         android:layout_width="194dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:inputType="textPassword"/>
 
                     <ImageView
                         android:id="@+id/iv_btnLogin"

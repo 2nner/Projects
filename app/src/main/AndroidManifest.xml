@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.highton.inner.sporrow">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +20,8 @@
         </activity>
         <activity android:name=".login.LoginPage" />
         <activity android:name=".login.RegisterUser" />
-        <activity android:name=".login.RegisterUserInfo"></activity>
+        <activity android:name=".login.RegisterUserInfo" />
+        <activity android:name=".home.HomePage"></activity>
     </application>
 
 </manifest>

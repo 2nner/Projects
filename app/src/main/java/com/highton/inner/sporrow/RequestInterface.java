@@ -1,25 +1,24 @@
-package com.highton.inner.sporrow.login;
+package com.highton.inner.sporrow;
 
-import java.util.ArrayList;
+import com.highton.inner.sporrow.login.User;
+import com.highton.inner.sporrow.login.UserInfo;
 
 import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface RequestInterface {
 
-    public static final String baseUrl = "http://52.79.202.248:1026";
+    public static final String BASE_URL = "http://52.79.202.248:1026/";
 
-    @FormUrlEncoded
-    @POST("/signup")
-    Call<ServerResponse> SignUp(@Field("email") String email,
-                                @Field("pw") String pw);
+    @POST("signup")
+    Call<Void> signup(@Body User user);
 
-    @FormUrlEncoded
     @POST("/info/initialize/{email}")
-    Call<ServerResponse> UploadUserInfo(@Path("email") String email,
-                              @Field("nickname") String nickname,
-                              @Field("categories") ArrayList<String> categories);
+    Call<Void> uploadUserInfo(@Path("email") String email,
+                              @Body UserInfo userinfo);
+
+    @POST("auth")
+    Call<Void> auth(@Body User user);
 }
