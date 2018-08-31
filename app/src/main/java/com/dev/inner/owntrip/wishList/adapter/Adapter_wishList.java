@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dev.inner.owntrip.R;
 import com.dev.inner.owntrip.wishList.data.Item_wishList;
@@ -26,7 +27,14 @@ public class Adapter_wishList extends RecyclerView.Adapter<Adapter_wishList.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_wishlist, viewGroup, false);
-        ViewHolder holder = new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Presse " + holder.getAdapterPosition(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return holder;
     }

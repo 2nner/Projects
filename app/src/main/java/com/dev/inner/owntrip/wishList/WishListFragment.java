@@ -52,7 +52,7 @@ public class WishListFragment extends Fragment {
 
     public void initList() {
         for (int i=0; i<10; i++) {
-            list_wishLists.add(new Item_wishList("한세사이버보안고등학교", "#공부 #학생 #고등학교", "2018.05.02"));
+            list_wishLists.add(new Item_wishList("한세사이버보안고등학교", "#공부 #고등학교", "2018.05.02"));
         }
     }
 

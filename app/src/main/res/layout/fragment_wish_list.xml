@@ -27,7 +27,7 @@
                 <EditText
                     android:id="@+id/et_wishList_search"
                     android:layout_width="0dp"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:maxLines="1"

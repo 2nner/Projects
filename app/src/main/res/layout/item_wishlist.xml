@@ -11,9 +11,29 @@
 
     <ImageView
         android:id="@+id/iv_wishList_thumbnail"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@mipmap/ic_launcher"/>
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/ic_launcher"
+        android:padding="10dp"/>
+
+    <ImageView
+        android:id="@+id/iv_wishList_badge"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_count_badge"
+        app:layout_constraintRight_toRightOf="@+id/iv_wishList_thumbnail"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_wishList_thumbnail"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+7"
+        android:textSize="10sp"
+        android:textColor="#000000"
+        app:layout_constraintTop_toTopOf="@+id/iv_wishList_badge"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_wishList_badge"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_wishList_badge"
+        app:layout_constraintRight_toRightOf="@+id/iv_wishList_badge"/>
 
     <TextView
         android:id="@+id/tv_wishList_title"
@@ -30,7 +50,7 @@
         android:id="@+id/tv_wishList_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="#서울  #고등학교  #학생"
+        android:text="#서울  #고등학교"
         android:textSize="12sp"
         android:textColor="#000000"
         app:layout_constraintTop_toBottomOf="@+id/tv_wishList_title"
