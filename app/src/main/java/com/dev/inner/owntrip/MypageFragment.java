@@ -1,7 +1,5 @@
 package com.dev.inner.owntrip;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,14 +12,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-
 public class MypageFragment extends Fragment {
 
     ImageView iv_userImg;
     TextView tv_username, tv_email;
     ListView lv_menu;
-
-    Context mContext;
 
     static final String[] LIST_MENU = {"나의 여행코스", "고객센터", "이용약관", "Push"};
 
@@ -30,15 +25,6 @@ public class MypageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if(context instanceof Activity) {
-            mContext = context;
-        }
     }
 
     @Override
@@ -54,7 +40,7 @@ public class MypageFragment extends Fragment {
         Glide.with(MypageFragment.this).load(R.drawable.ic_user).into(iv_userImg);
 
         // Set up ListView with ArrayAdpater
-        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, LIST_MENU);
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU);
         lv_menu.setAdapter(mAdapter);
 
         return view;
