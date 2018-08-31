@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="20dp"
+    android:paddingBottom="10dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp">
+
+    <ImageView
+        android:id="@+id/iv_wishList_thumbnail"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/tv_wishList_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="제목"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        app:layout_constraintLeft_toRightOf="@+id/iv_wishList_thumbnail"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_wishList_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#서울  #고등학교  #학생"
+        android:textSize="12sp"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@+id/tv_wishList_title"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_wishList_title"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_wishList_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2018.05.02"
+        android:textSize="10sp"
+        android:textColor="#8b8b8b"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <ImageView
+        android:id="@+id/tv_wishList_like"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@mipmap/ic_launcher"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+</android.support.constraint.ConstraintLayout>

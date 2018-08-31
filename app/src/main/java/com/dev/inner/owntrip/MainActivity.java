@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.dev.inner.owntrip.wishList.WishListFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     ViewPager vp_main_viewPager;
@@ -33,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         return new HomeFragment();
                     case 1:
-                        return null;
+                        return new WishListFragment();
                     case 2:
-                        return null;
+                        return new MakeCourseFragment();
                     case 3:
                         return null;
                 }
@@ -47,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
                 return 4;
             }
         });
-
-        vp_main_viewPager.setOffscreenPageLimit(1);
 
         vp_main_viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
