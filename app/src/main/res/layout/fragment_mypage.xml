@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MypageFragment">
+
+    <ImageView
+        android:id="@+id/iv_mypage_userimg"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_mypage_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="2nner"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_mypage_userimg"
+        app:layout_constraintTop_toTopOf="@+id/iv_mypage_userimg" />
+
+    <TextView
+        android:id="@+id/tv_mypage_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="khsbs001@coneat.com"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_mypage_userimg"
+        app:layout_constraintStart_toStartOf="@+id/tv_mypage_name" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="15dp"
+        android:text="@string/btn_modify"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_mypage_name" />
+
+    <ListView
+        android:id="@+id/lv_mypage_menu"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:choiceMode="singleChoice"
+        android:dividerHeight="1.5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_mypage_email" />
+
+</android.support.constraint.ConstraintLayout>

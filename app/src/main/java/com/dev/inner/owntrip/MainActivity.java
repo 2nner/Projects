@@ -14,7 +14,6 @@ import com.dev.inner.owntrip.wishList.WishListFragment;
 public class MainActivity extends AppCompatActivity {
 
     ViewPager vp_main_viewPager;
-
     BottomNavigationView bn_main_bottomNavi;
 
     MenuItem menuItem;
@@ -24,10 +23,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // findViewById()
         vp_main_viewPager = findViewById(R.id.vp_main_viewPager);
-
         bn_main_bottomNavi = findViewById(R.id.bn_main_bottomNavi);
 
+        // Set up ViewPager with adapter
         vp_main_viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     case 2:
                         return new MakeCourseFragment();
                     case 3:
-                        return null;
+                        return new MypageFragment();
                 }
                 return null;
             }
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     menuItem.setChecked(false);
                 }
                 bn_main_bottomNavi.getMenu().getItem(position).setChecked(true);
+                menuItem = bn_main_bottomNavi.getMenu().getItem(position);
             }
 
             @Override
