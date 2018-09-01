@@ -51,7 +51,7 @@ public class MakeCourseFragment extends Fragment implements View.OnClickListener
     // 활성화 되었는지를 검사하는 변수들
     boolean circle1 = false, circle2 = false, circle3 = false;
     // 사용된 Circle인지를 검사하는 변수들
-    List<Boolean> isCircledUsed;
+    List<Boolean> isCircledUsed = new ArrayList<>();
 
     public MakeCourseFragment() {
 
@@ -62,8 +62,9 @@ public class MakeCourseFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_make_course, container, false);
 
-        for(int i=0;i<3;i++)
-            isCircledUsed.add(false);
+        for(int i=0;i<3;i++) {
+            isCircledUsed.add(i, false);
+        }
 
         // findViewById
         fl = v.findViewById(R.id.circleflag);

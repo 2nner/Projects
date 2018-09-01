@@ -1,5 +1,7 @@
 package com.dev.inner.owntrip.Home;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -24,6 +26,8 @@ import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
 
+    Context mContext;
+
     ViewPager vp_homdAd;
     TextView tv_home_size;
     ArrayList<Integer> img = new ArrayList<>();
@@ -36,6 +40,12 @@ public class HomeFragment extends Fragment {
     final long DELAY_MS = 4000, PERIOD_MS = 4000;
 
     public HomeFragment() {}
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,15 +72,15 @@ public class HomeFragment extends Fragment {
         iv_home_theme4 = view.findViewById(R.id.iv_home_theme4);
 
         //travel theme
-        Glide.with(getActivity()).asBitmap().load(R.drawable.beach).into(iv_home_theme1);
-        Glide.with(getActivity()).asBitmap().load(R.drawable.camping).into(iv_home_theme2);
-        Glide.with(getActivity()).asBitmap().load(R.drawable.matzip).into(iv_home_theme3);
-        Glide.with(getActivity()).asBitmap().load(R.drawable.hotel).into(iv_home_theme4);
+        Glide.with(mContext).asBitmap().load(R.drawable.beach).into(iv_home_theme1);
+        Glide.with(mContext).asBitmap().load(R.drawable.camping).into(iv_home_theme2);
+        Glide.with(mContext).asBitmap().load(R.drawable.matzip).into(iv_home_theme3);
+        Glide.with(mContext).asBitmap().load(R.drawable.hotel).into(iv_home_theme4);
 
         iv_home_theme1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ThemeActivity.class);
+                Intent intent = new Intent(mContext, ThemeActivity.class);
                 intent.putExtra("tag", "#여름");
                 startActivity(intent);
             }
@@ -79,7 +89,7 @@ public class HomeFragment extends Fragment {
         iv_home_theme2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ThemeActivity.class);
+                Intent intent = new Intent(mContext, ThemeActivity.class);
                 intent.putExtra("tag", "#캠핑");
                 startActivity(intent);
             }
@@ -88,7 +98,7 @@ public class HomeFragment extends Fragment {
         iv_home_theme3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ThemeActivity.class);
+                Intent intent = new Intent(mContext, ThemeActivity.class);
                 intent.putExtra("tag", "#맛집");
                 startActivity(intent);
             }
@@ -97,14 +107,14 @@ public class HomeFragment extends Fragment {
         iv_home_theme4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ThemeActivity.class);
+                Intent intent = new Intent(mContext, ThemeActivity.class);
                 intent.putExtra("tag", "#호캉스");
                 startActivity(intent);
             }
         });
 
         // Set up ViewPager with setAdapter()
-        PagerAdapter adapter = new HomeAdAdapter(getActivity(), img);
+        PagerAdapter adapter = new HomeAdAdapter((Activity) mContext, img);
         vp_homdAd.setAdapter(adapter);
 
         // Set up Timer
@@ -127,7 +137,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                Resources res = getResources();
+                Resources res = mContext.getResources();
                 String adimageCount = String.format(res.getString(R.string.adimageCount), vp_homdAd.getCurrentItem()+1, img.size());
                 tv_home_size.setText(adimageCount);
             }
