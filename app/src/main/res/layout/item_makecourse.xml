@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp">
+    
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_makeCourse_thumbnail"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:src="@drawable/camping" />
+
+    <TextView
+        android:id="@+id/tv_makeCourse_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="부산타워"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        app:layout_constraintLeft_toRightOf="@+id/iv_makeCourse_thumbnail"
+        android:layout_marginStart="11dp"/>
+
+    <TextView
+        android:id="@+id/tv_makeCourse_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="부산 중구 용두산길 37-30"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_makeCourse_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_makeCourse_title"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/tv_makeCourse_tags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#경치 #야경 #국밥 #요트 #분식"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@+id/tv_makeCourse_address"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_makeCourse_address"
+        android:layout_marginTop="5dp"/>
+    
+    <ImageView
+        android:id="@+id/iv_makeCourse_like"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</android.support.constraint.ConstraintLayout>

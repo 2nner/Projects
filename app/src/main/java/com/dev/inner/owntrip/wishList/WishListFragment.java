@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WishListFragment extends Fragment {
-    EditText et_wishList_search;
 
     RecyclerView rv_wishList_list;
 
@@ -38,10 +37,7 @@ public class WishListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish_list, container, false);
 
-        et_wishList_search = view.findViewById(R.id.et_wishList_search);
-
         rv_wishList_list = view.findViewById(R.id.rv_wishList_list);
-
 
         rv_wishList_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rv_wishList_list.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
@@ -54,7 +50,7 @@ public class WishListFragment extends Fragment {
 
     public void initList() {
         for (int i=0; i<10; i++) {
-            list_wishLists.add(new Item_wishList("한세사이버보안고등학교", "#공부 #고등학교", "2018.05.02"));
+            list_wishLists.add(new Item_wishList("한세사이버보안고등학교", "#경치 #야경 #국밥 #요트 #분식"));
         }
     }
 

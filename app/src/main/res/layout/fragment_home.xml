@@ -9,7 +9,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20dp">
+        android:paddingBottom="40dp"
+        android:overScrollMode="never">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -79,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/triptheme"
                 android:textColor="@android:color/black"

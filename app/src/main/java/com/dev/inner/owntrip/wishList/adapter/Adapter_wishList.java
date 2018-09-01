@@ -45,7 +45,6 @@ public class Adapter_wishList extends RecyclerView.Adapter<Adapter_wishList.View
 
         holder.tv_wishList_title.setText(item_wishList.getTv_wishList_title());
         holder.tv_wishList_content.setText(item_wishList.getTv_wishList_content());
-        holder.tv_wishList_date.setText(item_wishList.getTv_wishList_date());
     }
 
     @Override
@@ -54,12 +53,11 @@ public class Adapter_wishList extends RecyclerView.Adapter<Adapter_wishList.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_wishList_title, tv_wishList_content, tv_wishList_date;
+        TextView tv_wishList_title, tv_wishList_content;
         public ViewHolder(View view) {
             super(view);
             tv_wishList_title = view.findViewById(R.id.tv_wishList_title);
             tv_wishList_content = view.findViewById(R.id.tv_wishList_content);
-            tv_wishList_date = view.findViewById(R.id.tv_wishList_date);
         }
     }
 }
