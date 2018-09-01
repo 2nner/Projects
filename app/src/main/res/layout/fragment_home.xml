@@ -9,12 +9,44 @@
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="180dp">
+        android:layout_height="280dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/background_searchet"
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginEnd="17dp"
+            android:drawableLeft="@drawable/ic_hashtag"
+            android:drawablePadding="5.8dp"
+            android:drawableTint="#fe424d"
+            android:gravity="center_vertical"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="7.5dp"
+            android:hint="@string/searchHint"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="17sp"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_home_showad"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_home_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#ffffff"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="9dp"
+            android:layout_marginBottom="9dp"/>
 
     </FrameLayout>
 
@@ -36,77 +68,108 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="17dp"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/triptheme"
         android:textColor="@android:color/black"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+    
+    <ImageView
+        android:id="@+id/iv_home_theme1"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/iv_home_theme2"
+        android:layout_marginTop="9dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginEnd="16dp"/>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_home_theme1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/rounded_edittext"
-        android:padding="5dp"
-        android:paddingEnd="20dp"
-        android:paddingStart="20dp"
         android:text="#여름"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView5"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:textStyle="bold"
+        android:textSize="26sp"
+        android:textColor="#ffffff"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_home_theme1"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_home_theme1"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="6dp"/>
+
+    <ImageView
+        android:id="@+id/iv_home_theme2"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintLeft_toRightOf="@+id/iv_home_theme1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="17dp"/>
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/tv_home_theme2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_edittext"
-        android:padding="5dp"
-        android:paddingEnd="20dp"
-        android:paddingStart="20dp"
-        android:text="#물놀이"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView4" />
+        android:text="#캠핑"
+        android:textStyle="bold"
+        android:textSize="26sp"
+        android:textColor="#ffffff"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_home_theme2"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_home_theme2"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="6dp"/>
+
+    <ImageView
+        android:id="@+id/iv_home_theme3"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@+id/iv_home_theme1"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_home_theme1"
+        app:layout_constraintRight_toRightOf="@+id/iv_home_theme1"
+        android:layout_marginTop="16dp"/>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tv_home_theme3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="68dp"
-        android:background="@drawable/rounded_edittext"
-        android:padding="5dp"
-        android:paddingEnd="20dp"
-        android:paddingStart="20dp"
-        android:text="#캠프"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView6"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        android:text="#맛집"
+        android:textStyle="bold"
+        android:textSize="26sp"
+        android:textColor="#ffffff"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_home_theme3"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_home_theme3"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="6dp"/>
+
+    <ImageView
+        android:id="@+id/iv_home_theme4"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="@+id/iv_home_theme3"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_home_theme3"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_home_theme2"
+        app:layout_constraintRight_toRightOf="@+id/iv_home_theme2"/>
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tv_home_theme4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/rounded_edittext"
-        android:padding="5dp"
-        android:paddingEnd="20dp"
-        android:paddingStart="20dp"
-        android:text="#맛집탐방"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:text="#호캉스"
+        android:textStyle="bold"
+        android:textSize="26sp"
+        android:textColor="#ffffff"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_home_theme4"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_home_theme4"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="6dp"/>
+
 </android.support.constraint.ConstraintLayout>

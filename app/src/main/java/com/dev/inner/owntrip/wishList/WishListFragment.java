@@ -3,6 +3,7 @@ package com.dev.inner.owntrip.wishList;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,6 +44,7 @@ public class WishListFragment extends Fragment {
 
 
         rv_wishList_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rv_wishList_list.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         rv_wishList_list.setHasFixedSize(true);
         adapter_wishList = new Adapter_wishList(getContext(), list_wishLists);
         rv_wishList_list.setAdapter(adapter_wishList);

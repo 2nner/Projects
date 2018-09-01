@@ -1,5 +1,6 @@
 package com.dev.inner.owntrip.Home;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -8,7 +9,10 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.dev.inner.owntrip.Home.adapter.HomeAdAdapter;
 import com.dev.inner.owntrip.R;
 
@@ -19,7 +23,10 @@ import java.util.TimerTask;
 public class HomeFragment extends Fragment {
 
     ViewPager vp_homdAd;
+    TextView tv_home_size;
     ArrayList<Integer> img = new ArrayList<>();
+
+    ImageView iv_home_theme1, iv_home_theme2, iv_home_theme3, iv_home_theme4;
 
     // Auto ViewPager Loop Setting
     int currentPage = 0;
@@ -45,6 +52,19 @@ public class HomeFragment extends Fragment {
         img.add(R.drawable.vp_img5);
         vp_homdAd = view.findViewById(R.id.vp_home_showad);
 
+        tv_home_size = view.findViewById(R.id.tv_home_size);
+
+        iv_home_theme1 = view.findViewById(R.id.iv_home_theme1);
+        iv_home_theme2 = view.findViewById(R.id.iv_home_theme2);
+        iv_home_theme3 = view.findViewById(R.id.iv_home_theme3);
+        iv_home_theme4 = view.findViewById(R.id.iv_home_theme4);
+
+        //travel theme
+        Glide.with(getActivity()).asBitmap().load(R.drawable.beach).into(iv_home_theme1);
+        Glide.with(getActivity()).asBitmap().load(R.drawable.camping).into(iv_home_theme2);
+        Glide.with(getActivity()).asBitmap().load(R.drawable.matzip).into(iv_home_theme3);
+        Glide.with(getActivity()).asBitmap().load(R.drawable.hotel).into(iv_home_theme4);
+
         // Set up ViewPager with setAdapter()
         PagerAdapter adapter = new HomeAdAdapter(getActivity(), img);
         vp_homdAd.setAdapter(adapter);
@@ -58,6 +78,9 @@ public class HomeFragment extends Fragment {
                     currentPage = 0;
                 }
                 vp_homdAd.setCurrentItem(currentPage++, true);
+                Resources res = getResources();
+                String adimageCount = String.format(res.getString(R.string.adimageCount), vp_homdAd.getCurrentItem()+1, img.size());
+                tv_home_size.setText(adimageCount);
             }
         };
 
