@@ -10,7 +10,7 @@
     <string name="wordsinad">9월 추천 여행지는?</string>
     <string name="triptheme">추천 여행 테마</string>
 
-    <string name="searchHint">가고싶은 여행지와 관련된 검색어로 검색해보세요!</string>
+    <string name="searchHint">여행지와 관련된 검색어로 검색해보세요!</string>
     <string name="adimageCount">%d/%d</string>
     <string name="wishList">위시리스트</string>
 </resources>

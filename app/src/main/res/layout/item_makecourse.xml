@@ -34,17 +34,104 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_makeCourse_title"
         android:layout_marginTop="5dp"/>
 
+    <!--<TextView-->
+        <!--android:id="@+id/tv_makeCourse_tags"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="#경치 #야경 #국밥 #요트 #분식"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textColor="#000000"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/tv_makeCourse_address"-->
+        <!--app:layout_constraintLeft_toLeftOf="@+id/tv_makeCourse_address"-->
+        <!--android:layout_marginTop="5dp"/>-->
+
     <TextView
-        android:id="@+id/tv_makeCourse_tags"
+        android:id="@+id/wishList_tag1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="#경치 #야경 #국밥 #요트 #분식"
+        android:text="#"
         android:textSize="15sp"
-        android:textColor="#000000"
+        android:textColor="#fe424d"
         app:layout_constraintTop_toBottomOf="@+id/tv_makeCourse_address"
         app:layout_constraintLeft_toLeftOf="@+id/tv_makeCourse_address"
         android:layout_marginTop="5dp"/>
-    
+
+    <TextView
+        android:id="@+id/tv_wishList_tag1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        app:layout_constraintTop_toTopOf="@+id/wishList_tag1"
+        app:layout_constraintBottom_toBottomOf="@+id/wishList_tag1"
+        app:layout_constraintLeft_toRightOf="@+id/wishList_tag1"/>
+
+    <!--<TextView-->
+        <!--android:id="@+id/wishList_tag2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="#"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textColor="#fe424d"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/tv_wishList_tag1"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/tv_wishList_tag1"-->
+        <!--app:layout_constraintLeft_toRightOf="@+id/tv_wishList_tag1"-->
+        <!--android:layout_marginStart="4dp"/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_wishList_tag2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textColor="#000000"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/wishList_tag2"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/wishList_tag2"-->
+        <!--app:layout_constraintLeft_toRightOf="@+id/wishList_tag2"/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/wishList_tag3"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="#"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textColor="#fe424d"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/tv_wishList_tag2"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/tv_wishList_tag2"-->
+        <!--app:layout_constraintLeft_toRightOf="@+id/tv_wishList_tag2"-->
+        <!--android:layout_marginStart="4dp"/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_wishList_tag3"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textColor="#000000"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/wishList_tag3"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/wishList_tag3"-->
+        <!--app:layout_constraintLeft_toRightOf="@+id/wishList_tag3"/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/wishList_tag4"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="#"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textColor="#fe424d"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/tv_wishList_tag3"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/tv_wishList_tag3"-->
+        <!--app:layout_constraintLeft_toRightOf="@+id/tv_wishList_tag3"-->
+        <!--android:layout_marginStart="4dp"/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_wishList_tag4"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textColor="#000000"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/wishList_tag4"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/wishList_tag4"-->
+        <!--app:layout_constraintLeft_toRightOf="@+id/wishList_tag4"/>-->
+    <!---->
     <ImageView
         android:id="@+id/iv_makeCourse_like"
         android:layout_width="30dp"

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".wishList.WishListFragment">
+    tools:context=".wishList.WishListFragment"
+    android:background="@null">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -35,7 +36,17 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="#ffffff">
+
+        <View
+            android:id="@+id/iv_wishList_div"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="#bfbfbf"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_wishList_list"
@@ -43,8 +54,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:overScrollMode="never"
+            app:layout_constraintTop_toBottomOf="@+id/iv_wishList_div"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"/>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.design.widget.CoordinatorLayout>
