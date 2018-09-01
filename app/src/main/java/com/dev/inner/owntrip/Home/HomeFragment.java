@@ -78,11 +78,27 @@ public class HomeFragment extends Fragment {
                     currentPage = 0;
                 }
                 vp_homdAd.setCurrentItem(currentPage++, true);
+            }
+        };
+
+        vp_homdAd.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
                 Resources res = getResources();
                 String adimageCount = String.format(res.getString(R.string.adimageCount), vp_homdAd.getCurrentItem()+1, img.size());
                 tv_home_size.setText(adimageCount);
             }
-        };
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
 
         timer = new Timer();
         timer.schedule(new TimerTask() {
