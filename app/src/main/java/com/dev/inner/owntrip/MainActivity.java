@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         bn_main_bottomNavi = findViewById(R.id.bn_main_bottomNavi);
 
         // Set up ViewPager with adapter
+        vp_main_viewPager.setCurrentItem(0);
+        vp_main_viewPager.setOffscreenPageLimit(4);
         vp_main_viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {

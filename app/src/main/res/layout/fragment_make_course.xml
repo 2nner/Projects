@@ -10,6 +10,7 @@
         android:id="@+id/civ_make_address"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_city"
         app:civ_border_color="#78d9ff"
@@ -29,7 +30,7 @@
         android:background="@drawable/circle_step"
         android:gravity="center"
         android:text="+"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/tv_make_no2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/civ_make_address"
@@ -44,7 +45,7 @@
         android:background="@drawable/circle_step"
         android:gravity="center"
         android:text="+"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/tv_make_no3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tv_make_no1"
@@ -59,7 +60,7 @@
         android:background="@drawable/circle_step"
         android:gravity="center"
         android:text="+"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/tv_make_no4"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tv_make_no2"
@@ -69,14 +70,53 @@
         android:id="@+id/tv_make_no4"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/circle_step"
         android:gravity="center"
         android:text="+"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tv_make_no3"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
+
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="495dp"
+        app:layout_constraintBottom_toTopOf="@+id/barrier6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

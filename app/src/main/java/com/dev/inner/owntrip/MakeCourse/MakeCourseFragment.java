@@ -76,10 +76,18 @@ public class MakeCourseFragment extends Fragment implements View.OnClickListener
     }
 
     public void action3() {
-
+        tv_step3.setVisibility(View.VISIBLE);
     }
 
     public void action4() {
+        tv_step4.setVisibility(View.VISIBLE);
+    }
 
+    public void cancellAll() {
+        tv_step1.setVisibility(View.INVISIBLE);
+        tv_step2.setVisibility(View.INVISIBLE);
+        tv_step3.setVisibility(View.INVISIBLE);
+        tv_step4.setVisibility(View.INVISIBLE);
+        request.clear();
     }
 }

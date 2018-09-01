@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <item
         android:id="@+id/item_home"
-        android:icon="@mipmap/ic_launcher"
-        android:title=""/>
+        android:icon="@drawable/map"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:title="검색"/>
 
     <item
         android:id="@+id/item_second"
-        android:icon="@mipmap/ic_launcher"
-        android:title=""/>
+        android:icon="@drawable/ic_hot_air_balloon"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:title="위시리스트"/>
 
     <item
         android:id="@+id/item_third"
-        android:icon="@mipmap/ic_launcher"
-        android:title=""/>
+        android:icon="@drawable/ic_position"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:title="여행만들기"/>
 
     <item
         android:id="@+id/item_fourth"
-        android:icon="@mipmap/ic_launcher"
-        android:title=""/>
+        android:icon="@drawable/avatar"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:title="MY"/>
 </menu>

@@ -19,5 +19,4 @@ public class RetrofitCreator {
         return retrofit.create(serviceClass);
     }
 
-
 }
