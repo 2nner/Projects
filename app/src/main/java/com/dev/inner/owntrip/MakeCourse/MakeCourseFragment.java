@@ -2,8 +2,6 @@ package com.dev.inner.owntrip.MakeCourse;
 
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,8 +25,6 @@ import com.dev.inner.owntrip.R;
 import com.dev.inner.owntrip.RetrofitCreator;
 import com.dev.inner.owntrip.RetrofitResponse;
 import com.dev.inner.owntrip.RetrofitService;
-import com.dev.inner.owntrip.wishList.adapter.Adapter_wishList;
-import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +50,8 @@ public class MakeCourseFragment extends Fragment implements View.OnClickListener
     int index = 0;
     // 활성화 되었는지를 검사하는 변수들
     boolean circle1 = false, circle2 = false, circle3 = false;
+    // 사용된 Circle인지를 검사하는 변수들
+    List<Boolean> isCircledUsed;
 
     public MakeCourseFragment() {
 
@@ -63,6 +61,9 @@ public class MakeCourseFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_make_course, container, false);
+
+        for(int i=0;i<3;i++)
+            isCircledUsed.add(false);
 
         // findViewById
         fl = v.findViewById(R.id.circleflag);
@@ -159,9 +160,25 @@ public class MakeCourseFragment extends Fragment implements View.OnClickListener
     }
 
     public void add(int position) {
-        Drawable add = getResources().getDrawable(R.drawable.ic_add);
-        Drawable added = getResources().getDrawable(R.drawable.ic_added);
+        if(!isCircledUsed.get(position-1)) {
+            isCircledUsed.set(position-1, true);
 
+            switch(position) {
+                case 1:
+                    Glide.with(mContext).load(R.drawable.ic_added).into(iv_select1);
+                    break;
+                case 2:
+                    Glide.with(mContext).load(R.drawable.ic_added).into(iv_select2);
+                    break;
+                case 3:
+                    Glide.with(mContext).load(R.drawable.ic_added).into(iv_select3);
+                    break;
+            }
+            // 추가하는 이벤트 여기에 작성
+        }
+        else {
+            Toast.makeText(mContext.getApplicationContext(), "이미 채워진 여정입니다! 다른 여정을 선택해주세요!", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void search(String word) {
@@ -197,6 +214,10 @@ public class MakeCourseFragment extends Fragment implements View.OnClickListener
         request.clear();
         index = 0;
         circle1 = circle2 = circle3 = false;
+
+        for(int i=0;i<3;i++) {
+            isCircledUsed.set(i, false);
+        }
         Glide.with(mContext).load(R.drawable.ic_add).into(iv_select1);
         Glide.with(mContext).load(R.drawable.ic_add).into(iv_select2);
         Glide.with(mContext).load(R.drawable.ic_add).into(iv_select3);
