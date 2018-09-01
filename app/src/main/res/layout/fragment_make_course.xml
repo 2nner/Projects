@@ -58,6 +58,7 @@
         android:layout_marginTop="8dp"
         android:src="@drawable/ic_add"
         android:visibility="visible"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toStartOf="@+id/iv_make_select2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/circleflag"

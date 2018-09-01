@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.dev.inner.owntrip.MakeCourse.MakeCourseFragment;
 import com.dev.inner.owntrip.MakeCourse.data.Item_makeCourse;
 import com.dev.inner.owntrip.R;
 import com.dev.inner.owntrip.RetrofitService;

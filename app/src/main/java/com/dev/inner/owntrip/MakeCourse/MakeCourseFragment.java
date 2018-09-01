@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.dev.inner.owntrip.MakeCourse.adapter.Adapter_makeCourse;
+import com.dev.inner.owntrip.MakeCourse.adapter.RecyclerItemClickListener;
 import com.dev.inner.owntrip.MakeCourse.data.Item_makeCourse;
 import com.dev.inner.owntrip.MakeCourse.data.Tags;
 import com.dev.inner.owntrip.R;
@@ -48,6 +49,7 @@ public class MakeCourseFragment extends Fragment implements View.OnClickListener
 
     // 현재 포커스를 가지고 있는 Circle의 Index
     int index = 0;
+    int p = 0;
     // 활성화 되었는지를 검사하는 변수들
     boolean circle1 = false, circle2 = false, circle3 = false;
     // 사용된 Circle인지를 검사하는 변수들
@@ -62,7 +64,7 @@ public class MakeCourseFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_make_course, container, false);
 
-        for(int i=0;i<3;i++) {
+        for (int i = 0; i < 3; i++) {
             isCircledUsed.add(i, false);
         }
 
@@ -87,6 +89,18 @@ public class MakeCourseFragment extends Fragment implements View.OnClickListener
 
         rv_make_item.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rv_make_item.setHasFixedSize(true);
+
+        rv_make_item.addOnItemTouchListener(new RecyclerItemClickListener(mContext, rv_make_item, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Glide.with(mContext).load("http://112.158.99.134:3000/Images/광안대교.jpg").into(iv_select1);
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+        }));
 
         return v;
     }
