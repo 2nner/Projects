@@ -1,5 +1,6 @@
 package com.dev.inner.owntrip.Home;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dev.inner.owntrip.Home.adapter.HomeAdAdapter;
 import com.dev.inner.owntrip.R;
+import com.dev.inner.owntrip.ThemeActivity;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -64,6 +66,42 @@ public class HomeFragment extends Fragment {
         Glide.with(getActivity()).asBitmap().load(R.drawable.camping).into(iv_home_theme2);
         Glide.with(getActivity()).asBitmap().load(R.drawable.matzip).into(iv_home_theme3);
         Glide.with(getActivity()).asBitmap().load(R.drawable.hotel).into(iv_home_theme4);
+
+        iv_home_theme1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ThemeActivity.class);
+                intent.putExtra("tag", "#여름");
+                startActivity(intent);
+            }
+        });
+
+        iv_home_theme2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ThemeActivity.class);
+                intent.putExtra("tag", "#캠핑");
+                startActivity(intent);
+            }
+        });
+
+        iv_home_theme3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ThemeActivity.class);
+                intent.putExtra("tag", "#맛집");
+                startActivity(intent);
+            }
+        });
+
+        iv_home_theme4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ThemeActivity.class);
+                intent.putExtra("tag", "#호캉스");
+                startActivity(intent);
+            }
+        });
 
         // Set up ViewPager with setAdapter()
         PagerAdapter adapter = new HomeAdAdapter(getActivity(), img);
