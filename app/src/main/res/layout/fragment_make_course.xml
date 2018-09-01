@@ -6,84 +6,127 @@
     android:layout_height="match_parent"
     tools:context=".MakeCourse.MakeCourseFragment">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/civ_make_address"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_city"
-        app:civ_border_color="#78d9ff"
-        app:civ_border_width="1dp"
-        app:layout_constraintEnd_toStartOf="@+id/tv_make_no1"
+    <FrameLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/toolbar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:lineSpacingExtra="4sp"
+            android:text="여행만들기"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_make_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginEnd="20dp"
+            android:lineSpacingExtra="4sp"
+            android:text="완료"
+            android:textColor="#48b1d9"
+            android:textSize="20sp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/circleflag"
+        android:layout_width="60dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/circle_red"
+        app:layout_constraintEnd_toStartOf="@+id/iv_make_select1"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout2">
 
-    <TextView
-        android:id="@+id/tv_make_no1"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/circle_step"
-        android:gravity="center"
-        android:text="+"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/tv_make_no2"
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_flag" />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/iv_make_select1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_add"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/iv_make_select2"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/civ_make_address"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/circleflag"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout2" />
 
-    <TextView
-        android:id="@+id/tv_make_no2"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/circle_step"
-        android:gravity="center"
-        android:text="+"
+    <ImageView
+        android:id="@+id/iv_make_select2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_add"
         android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/tv_make_no3"
+        app:layout_constraintEnd_toStartOf="@+id/iv_make_select3"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tv_make_no1"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/iv_make_select1"
+        app:layout_constraintTop_toTopOf="@+id/iv_make_select1" />
 
-    <TextView
-        android:id="@+id/tv_make_no3"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/circle_step"
-        android:gravity="center"
-        android:text="+"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/tv_make_no4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tv_make_no2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_make_no4"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/circle_step"
-        android:gravity="center"
-        android:text="+"
+    <ImageView
+        android:id="@+id/iv_make_select3"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_add"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tv_make_no3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/iv_make_select2"
+        app:layout_constraintTop_toTopOf="@+id/iv_make_select2" />
+
+    <EditText
+        android:id="@+id/et_make_findhash"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/background_searchet"
+        android:drawablePadding="5.8dp"
+        android:drawableStart="@drawable/ic_hashtag"
+        android:drawableTint="#fe424d"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:hint="@string/searchHint"
+        android:maxLines="1"
+        android:paddingBottom="6dp"
+        android:paddingEnd="7.5dp"
+        android:paddingStart="12dp"
+        android:paddingTop="6dp"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_make_select1" />
+
+    <ImageView
+        android:id="@+id/iv_make_find"
+        android:layout_width="27dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/filter"
+        app:layout_constraintBottom_toTopOf="@+id/lv_make_item"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.constraint.Barrier
         android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="top" />
@@ -100,23 +143,12 @@
         android:layout_height="wrap_content"
         app:barrierDirection="top" />
 
-    <android.support.constraint.Barrier
-        android:id="@+id/barrier5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="top" />
-
-    <android.support.constraint.Barrier
-        android:id="@+id/barrier6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="top" />
-
-
-    <android.support.v4.view.ViewPager
+    <ListView
+        android:id="@+id/lv_make_item"
         android:layout_width="match_parent"
-        android:layout_height="495dp"
-        app:layout_constraintBottom_toTopOf="@+id/barrier6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="400dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_make_findhash"
+        tools:listitem="@layout/item_wishlist" />
+
 </android.support.constraint.ConstraintLayout>

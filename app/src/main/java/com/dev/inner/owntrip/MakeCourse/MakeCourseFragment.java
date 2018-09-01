@@ -1,25 +1,34 @@
 package com.dev.inner.owntrip.MakeCourse;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.dev.inner.owntrip.R;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class MakeCourseFragment extends Fragment implements View.OnClickListener {
 
-    TextView tv_step1, tv_step2, tv_step3, tv_step4;
-    CircleImageView iv_address;
+    FrameLayout fl;
+    ImageView iv_select1, iv_select2, iv_select3, iv_find;
     ArrayList<String> request = new ArrayList<>();
+
+    Context mContext;
+
+    // 현재 포커스를 가지고 있는 Circle의 Index
+    int index = 0;
+    // 활성화 되었는지를 검사하는 변수들
+    boolean circle1 = false, circle2 = false, circle3 = false;
 
     public MakeCourseFragment() {
 
@@ -30,35 +39,43 @@ public class MakeCourseFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_make_course, container, false);
 
-        // findByViewId
-        tv_step1 = v.findViewById(R.id.tv_make_no1);
-        tv_step1.setOnClickListener(this);
-        tv_step2 = v.findViewById(R.id.tv_make_no2);
-        tv_step2.setOnClickListener(this);
-        tv_step3 = v.findViewById(R.id.tv_make_no3);
-        tv_step3.setOnClickListener(this);
-        tv_step4 = v.findViewById(R.id.tv_make_no4);
-        tv_step4.setOnClickListener(this);
-        iv_address = v.findViewById(R.id.civ_make_address);
-        iv_address.setOnClickListener(this);
+        // findViewById
+        fl = v.findViewById(R.id.circleflag);
+        fl.setOnClickListener(this);
+        iv_select1 = v.findViewById(R.id.iv_make_select1);
+        iv_select1.setOnClickListener(this);
+        iv_select2 = v.findViewById(R.id.iv_make_select2);
+        iv_select2.setOnClickListener(this);
+        iv_select3 = v.findViewById(R.id.iv_make_select3);
+        iv_select3.setOnClickListener(this);
+        iv_find = v.findViewById(R.id.iv_make_find);
+        iv_find.setOnClickListener(this);
 
         return v;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.civ_make_address:
+            case R.id.circleflag:
+                index = 0;
+                break;
+            case R.id.iv_make_select1:
                 action1();
                 break;
-            case R.id.tv_make_no1:
+            case R.id.iv_make_select2:
                 action2();
                 break;
-            case R.id.tv_make_no2:
+            case R.id.iv_make_select3:
                 action3();
                 break;
-            case R.id.tv_make_no3:
-                action4();
-                break;
+            case R.id.tv_make_complete:
+                send();
         }
     }
 
@@ -68,26 +85,46 @@ public class MakeCourseFragment extends Fragment implements View.OnClickListener
     }
 
     public void action1() {
-        tv_step1.setVisibility(View.VISIBLE);
+        index = 1;
+        circle1 = true;
+        Glide.with(mContext).load(R.drawable.circle_red).into(iv_select1);
+        iv_select2.setVisibility(View.VISIBLE);
     }
 
     public void action2() {
-        tv_step2.setVisibility(View.VISIBLE);
+        if(!circle1) {
+            Toast.makeText(mContext, "이전의 여정에 여행을 등록하세요!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            index = 2;
+            circle2 = true;
+            Glide.with(mContext).load(R.drawable.circle_red).into(iv_select2);
+            iv_select3.setVisibility(View.VISIBLE);
+        }
     }
 
     public void action3() {
-        tv_step3.setVisibility(View.VISIBLE);
+        if(!circle2) {
+            Toast.makeText(mContext, "이전의 여정에 여행을 등록하세요!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            index = 3;
+            circle3 = true;
+            Glide.with(mContext).load(R.drawable.circle_red).into(iv_select3);
+        }
     }
 
-    public void action4() {
-        tv_step4.setVisibility(View.VISIBLE);
+    public void send() {
+        // 여기다가 request 전송해서 서버 통신
+        cancellAll();
     }
 
     public void cancellAll() {
-        tv_step1.setVisibility(View.INVISIBLE);
-        tv_step2.setVisibility(View.INVISIBLE);
-        tv_step3.setVisibility(View.INVISIBLE);
-        tv_step4.setVisibility(View.INVISIBLE);
         request.clear();
+        index = 0;
+        circle1 = circle2 = circle3 = false;
+        Glide.with(mContext).load(R.drawable.ic_add).into(iv_select1);
+        Glide.with(mContext).load(R.drawable.ic_add).into(iv_select2);
+        Glide.with(mContext).load(R.drawable.ic_add).into(iv_select3);
     }
 }
