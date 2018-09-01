@@ -24,7 +24,7 @@ public class HomeFragment extends Fragment {
     // Auto ViewPager Loop Setting
     int currentPage = 0;
     Timer timer;
-    final long DELAY_MS = 8000, PERIOD_MS = 8000;
+    final long DELAY_MS = 4000, PERIOD_MS = 4000;
 
     public HomeFragment() {}
 
@@ -42,6 +42,7 @@ public class HomeFragment extends Fragment {
         img.add(R.drawable.vp_img2);
         img.add(R.drawable.vp_img3);
         img.add(R.drawable.vp_img4);
+        img.add(R.drawable.vp_img5);
         vp_homdAd = view.findViewById(R.id.vp_home_showad);
 
         // Set up ViewPager with setAdapter()

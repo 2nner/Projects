@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.dev.inner.owntrip.Home.HomeFragment;
+import com.dev.inner.owntrip.MakeCourse.MakeCourseFragment;
 import com.dev.inner.owntrip.wishList.WishListFragment;
 
 public class MainActivity extends AppCompatActivity {
