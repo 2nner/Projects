@@ -1,6 +1,7 @@
 package com.khsbs.rgbfromimage
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -102,6 +103,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     @Throws(IOException::class)
     fun createImageFile() : File {
         val timeStamp = SimpleDateFormat("yyyyMMDD_HHmmss").format(Date())

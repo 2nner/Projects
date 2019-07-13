@@ -9,9 +9,40 @@
 
     <ImageView
             android:id="@+id/iv_clickableImg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
 
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_selectedPos"/>
+
+    <TextView
+            android:id="@+id/tv_selectedPos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/selected_position"
+            android:gravity="center"
+
+            android:paddingTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_clickableImg"
+            app:layout_constraintBottom_toTopOf="@id/tv_rgbValue"/>
+
+    <TextView
+            android:id="@+id/tv_rgbValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/rgbValue"
+            android:gravity="center"
+
+            android:paddingBottom="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_selectedPos"
+            app:layout_constraintBottom_toBottomOf="parent"
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
